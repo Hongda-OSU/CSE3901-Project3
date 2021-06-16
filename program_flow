@@ -1,0 +1,9 @@
+WEB REQUEST - Get the CSE faculty directory
+List all the names in alphabetical order
+USER INPUT - User types in a name
+List all faculty with that name in a numbered list
+USER INPUT - User enters a number in the list
+WEB REQUEST - Get the staff page for the selected staff member
+Format and display data from that page
+USER INPUT - Wait for user to input anything
+Loop back to beginning
