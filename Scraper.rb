@@ -6,6 +6,9 @@ require 'nokogiri'
 # Edited 6/18/2021 by Madison Graziani
 #   -Added initialization for @information and edited method titles
 # NOTE: Still need to add part to check if already in hash
+# Edited by: 6/18/2021 by Drew Jackson
+#   -Added keyword search
+
 class Scraper
   def initialize
     @page = Page.new
@@ -69,14 +72,57 @@ class Scraper
 
   end
 
-  #TODO
+  #
   # (1)there are three way user could choice, use Date: Year, Month, *Day (optional), display a list of news, ask which news they to see(integer), go page, scrape page content down, display to use
   # (2)prompt for key words, find the news title contains that keyword, and repeat
   # Created by Drew Jackson 6/17/21
+  # @param terms
+  #   an array of search terms entered by the user
+  # @return
+  #   a hash of title/link key/value pairs of articles containing search terms
+  # TODO use RegExp to be case insensitive
   def keyword_search *terms
-    articles = Array.new
-    #terms.each{|term| @information.}
+    matches = Array.new
+    regx = create_regexp terms
+
+    # Search titles for key words
+    @information.each_key{|title| matches.push(title) if regx.match(title)}
+
+    #search unmatched articles text for key words
+    remaining = @information.reject{|key| matches.include?(key.to_s)}
+    remaining.each_value{|link| matches.push(remaining.key(link)) if search_news_text(link, regx)}
+
+    #return hash of matched articles
+    @information.select{|key| matches.include?(key.to_s)}
   end
+
+  # Created by Drew Jackson 6/17/2021
+  # Scans an article for keywords, returns true if matched
+  # @param link
+  #   The link to the article to be scanned
+  # @param regx
+  #   The regular expression which the article will be scanned against
+  # @return
+  #   A boolean value, true if matches to regx are found, false if not
+  def search_news_text link, regx
+    connect_page link
+    content = scrape_content
+    # RegExp to search content for keywords
+    # TODO match to format of content_scrape return
+    regx.match?(content)
+  end
+
+  # Created by Drew Jackson 6/18/21
+  # Takes a list of search terms and returns an all encompassing Regexp
+  # @param term
+  #   an array of search terms given by the user
+  # @return
+  #   a single regular expression to cover all search terms
+  def create_regexp term
+    #TODO update to case insensitive
+    Regexp.union(term)
+  end
+
   # (3)Randomly generate a list of titles, and repeat
   # A view to make a interaction between user and Scraper
   # Possibly: GUI
@@ -266,9 +312,8 @@ end
 #page.goto_lastPage
 #puts page.is_lastPage?
 #puts page.mask_newsLinks
-
-
-
+#r = scraper.create_regexp ['abc', 'def']
+#puts r.match?('ab def')
 
 
 
