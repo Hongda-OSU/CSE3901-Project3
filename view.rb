@@ -16,7 +16,8 @@ class View
   # Created 6/17/21 by Samuel Gernstetter
   # prompt the user to navigate the article list
   def menu_prompt
-    print "Enter an article's number to read it, or enter 'next'/'previous' to get the next/previous page, if present: "
+    print "Enter an article's number to read it, enter 'next'/'previous' to go to the next/previous page if present, "
+    print "or enter 'quit' to exit the program: "
     gets.chomp
   end
 
