@@ -6,8 +6,67 @@ require 'nokogiri'
 class Scraper
   def initialize
     page = Page.new
-    information = Hash.new #store news title as Hash key and news link as Hash value, need to check if news title already exist in hash when store
+    @information = Hash.new #store news title as Hash key and news link as Hash value, need to check if news title already exist in hash when store
+    @agent = Mechanize.new
+    @page = page.currentPage
+    @newsPage = nil
   end
+
+  # Madison
+  # get everything stored in @information
+  def scrape_all
+
+  end
+
+  # Madison
+  # update the mask news
+  def upade
+
+  end
+
+  # Madison
+  # check same news title
+  def check_sameNews
+
+  end
+
+  # Madison
+  # make a link to the specific news, update @newsPage
+  def connect_page
+    page = @agent.get URL
+
+  end
+
+  # Madison
+  # scrape the content of the news page
+  def scrape_content
+    @newsPage
+  end
+
+  # Madison
+  # scrape the time of the news page
+  def scrape_time
+
+  end
+
+  # Madison
+  # scrape the suthor of the news page
+  def scrape_author
+
+  end
+
+  #Madison
+  # display the news, search format (1)
+  def list_news year, month, time = nil
+
+  end
+
+  # (1)there are three way user could choice, use Date: Year, Month, *Day (optional), display a list of news, ask which news they to see(integer), go page, scrape page content down, display to use
+  # (2)prompt for key words, find the news title contains that keyword, and repeat
+  # (3)Randomly generate a list of titles, and repeat
+  # A view to make a interaction between user and Scraper
+  # Possibly: GUI
+
 end
 
 
@@ -183,12 +242,13 @@ end
 
 #Test
 page = Page.new
-#page.goto_nextPage
-#puts page.has_previousPage
-#puts page.has_nextPage
+page.goto_nextPage
+page.goto_lastPage
+puts page.has_previousPage?
+puts page.has_nextPage?
 #page.goto_lastPage
-#puts page.is_lastPage?
-puts page.mask_newsLinks
+puts page.is_lastPage?
+#puts page.mask_newsLinks
 
 
 
