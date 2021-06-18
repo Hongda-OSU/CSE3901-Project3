@@ -5,10 +5,11 @@
 class View
   # Created 6/17/21 by Samuel Gernstetter
   # print a numbered list of articles
-  def article_list(articles)
-    i = 1
+  def article_list(num, articles)
+    puts "Page #{num}"
+    num = 1
     articles.each do |headline|
-      puts "#{i}) #{headline}"
+      puts "#{num}) #{headline}"
     end
   end
 
@@ -21,8 +22,14 @@ class View
 
   # Created 6/17/21 by Samuel Gernstetter
   # alert the user that they attempted to access a nonexistent article
-  def error_message(num)
-    puts "Article ##{num} does not exist in current list. PLease enter a valid article number."
+  def article_error_message(num)
+    puts "WARNING: Article ##{num} does not exist in current list. PLease enter a valid article number."
+  end
+
+  # Created 6/17/21 by Samuel Gernstetter
+  # alert the user that they attempted to access a nonexistent page
+  def page_error_message
+    puts 'WARNING: Attempted to access nonexistent page.'
   end
 
   # Created 6/17/21 by Samuel Gernstetter
