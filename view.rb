@@ -18,7 +18,7 @@ class View
   def menu_prompt
     print "Enter an article's number to read it, enter 'next'/'previous' to go to the next/previous page if present, "
     print "or enter 'quit' to exit the program: "
-    gets.chomp
+    gets.chomp!
   end
 
   # Created 6/17/21 by Samuel Gernstetter
@@ -38,13 +38,13 @@ class View
   def print_article(headline, date, author, body)
     puts "#{headline}\n#{date}\n#{author}\n#{body}"
     print 'Enter any input when finished reading to return to the list.'
-    gets.chomp
+    gets.chomp!
   end
 
   # Created 6/17/21 by Drew Jackson
   # Prompt user for a keyword to search for
   def search_keyword
     print "Enter search term: "
-    gets.chomp
+    gets.chomp!
   end
 end
