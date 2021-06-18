@@ -3,13 +3,21 @@ require 'mechanize'
 require 'nokogiri'
 
 # created by: Hongda Lin (Date: 6/16/2021)
+# Edited 6/18/2021 by Madison Graziani
+#   -Added initialization for @information and edited method titles
+# NOTE: Still need to add part to check if already in hash
 class Scraper
   def initialize
-    page = Page.new
+    @page = Page.new
     @information = Hash.new #store news title as Hash key and news link as Hash value, need to check if news title already exist in hash when store
+    # Adds header news stories to @information
+    @page.head_news_titles().length().times {|i| @information[@page.head_news_titles[i].to_sym] = @page.mask_newsLinks[i] }
+    # Adds trending news stories to @information
+    @page.trend_news_titles().length().times {|i| @information[@page.trend_news_titles[i].to_sym] = @page.trending_newsLinks[i] }
+    # Adds general news stories to @information
+    @page.reg_news_titles().length().times {|i| @information[@page.reg_news_titles[i].to_sym] = @page.currentPage_newsLinks[i] }
     @agent = Mechanize.new
-    @page = page.currentPage
-    @newsPage = nil
+    @news_page = nil
   end
 
   # Madison
@@ -20,7 +28,7 @@ class Scraper
 
   # Madison
   # update the mask news
-  def updade
+  def update
 
   end
 
@@ -30,17 +38,18 @@ class Scraper
 
   end
 
-  # Madison
-  # make a link to the specific news, update @newsPage
-  def connect_page
-    page = @agent.get URL
+  # Edited by Madison Graziani
+  #   -Added parameter and edited code
+  # Updates @newsPage to hold the hyperlink of the given link parameter
+  def connect_page(link)
+    @news_page = @agent.get link
 
   end
 
   # Madison
   # scrape the content of the news page
   def scrape_content
-    @newsPage
+    @news_page
   end
 
   # Madison
@@ -55,7 +64,6 @@ class Scraper
 
   end
 
-  #Madison
   # display the news, search format (1)
   def list_news year, month, time = nil
 
@@ -67,7 +75,7 @@ class Scraper
   # Created by Drew Jackson 6/17/21
   def keyword_search *terms
     articles = Array.new
-    terms.each{|term| @information.}
+    #terms.each{|term| @information.}
   end
   # (3)Randomly generate a list of titles, and repeat
   # A view to make a interaction between user and Scraper
@@ -147,7 +155,7 @@ class Page
   # Created (Hongda Lin, 6/17)
   # trending news is the three news display on the middle, only need to scrape once
   # Return the title of trending news
-  def trending_newsTitles
+  def trend_news_titles
     titles = @currentPage.xpath('//h2[@class="post-title"]/a')
     arr_titles = Array.new
     titles.each_with_index {|title,index| arr_titles<<title.text if index < 3}
@@ -167,7 +175,7 @@ class Page
   # Created (Hongda Lin, 6/17)
   # mask news is the news display on the top, only need to scrape once
   # Return the title of mask news
-  def mask_newsTitles
+  def head_news_titles
     titles = @currentPage.xpath('//a[@class="mask-title"]')
     arr_titles = Array.new
     titles.each {|title| arr_titles<<title.text}
@@ -190,7 +198,7 @@ class Page
   # each title inside titles has class: Nokogiri::XML::Element
   #
   # Return the titles of news of current page, not include the trending news and mask news
-  def currentPage_newsTitles
+  def reg_news_titles
     titles = @currentPage.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a')
     arr_titles = Array.new
     titles.each{|title| arr_titles<<title.text}
@@ -241,19 +249,22 @@ class Page
   # Created (Hongda Lin, 6/17)
   # Return the current page news title, for checking page navigation
   def info
-    self.currentPage_newsTitles
+    self.reg_news_titles
   end
 
 end
 
 #Test
-page = Page.new
-page.goto_nextPage
-page.goto_lastPage
-puts page.has_previousPage?
-puts page.has_nextPage?
+#page = Page.new
+#scraper = Scraper.new
+#scraper.display
+#puts array2
+#page.goto_nextPage
 #page.goto_lastPage
-puts page.is_lastPage?
+#puts page.has_previousPage?
+#puts page.has_nextPage?
+#page.goto_lastPage
+#puts page.is_lastPage?
 #puts page.mask_newsLinks
 
 
