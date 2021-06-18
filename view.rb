@@ -40,4 +40,11 @@ class View
     print 'Enter any input when finished reading to return to the list.'
     gets.chomp
   end
+
+  # Created 6/17/21 by Drew Jackson
+  # Prompt user for a keyword to search for
+  def search_keyword
+    print "Enter search term: "
+    gets.chomp
+  end
 end
