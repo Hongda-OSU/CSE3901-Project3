@@ -2,68 +2,84 @@
 require 'mechanize'
 require 'nokogiri'
 
-# created by: Hongda Lin (Date: 6/16/2021)
+# Created by Hongda Lin (Date: 6/16/2021)
 # Edited 6/18/2021 by Madison Graziani
-#   -Added initialization for @information and edited method titles
-# NOTE: Still need to add part to check if already in hash
+#   -Added initialization for @information and added comments and method code
 # Edited by: 6/18/2021 by Drew Jackson
 #   -Added keyword search
-
 class Scraper
   def initialize
     @page = Page.new
-    @information = Hash.new #store news title as Hash key and news link as Hash value, need to check if news title already exist in hash when store
-    # Adds header news stories to @information
-    @page.mask_news_titles().length().times {|i| @information[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i] }
-    # Adds trending news stories to @information
-    @page.trend_news_titles().length().times {|i| @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] }
-    # Adds general news stories to @information
-    @page.reg_news_titles().length().times {|i| @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] }
+    #Stores article titles and their respective links as Hash pairs
+    @information = Hash.new
     @agent = Mechanize.new
+    #Webpage of one article
     @news_page = nil
   end
 
   # Madison
-  # get everything stored in @information
+  # Fills @information with article titles and links while making sure to check for duplicates
   def scrape_all
-
+    # Adds header news stories to @information
+    @page.mask_news_titles().length().times {|i| unless duplicate_title?(@page.mask_news_titles[i])
+                                                     @information[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i] end}
+    # Adds trending news stories to @information
+    @page.trend_news_titles().length().times {|i| unless duplicate_title?(@page.trend_news_titles[i])
+                                                    @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] end}
+    # Adds general news stories to @information
+    @page.reg_news_titles().length().times {|i| unless duplicate_title?(@page.reg_news_titles[i])
+                                                  @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] end}
   end
 
-  # Madison
-  # update the mask news
-  def update
-
+  # Edited by Madison Graziani on 6/19/2021
+  #   -Added the original version of code
+  # Updates @information if there are new mask articles
+  def update_mask_news
+    news_array = @page.mask_news_titles
+    news_links = @page.mask_news_links
+    news_array.length().times {|i| unless duplicate_title?(news_array[i])
+                                     @information[news_array[i].to_sym] = news_links[i] end}
   end
 
-  # Madison
-  # check same news title
-  def check_sameNews
-
+  # Edited by Madison Graziani on 6/19/2021
+  #   -Added the original version of code
+  # Checks if an article title already exists in @information
+  def duplicate_title?(title)
+    @information.has_key? title
   end
 
-  # Edited by Madison Graziani
+  # Edited by Madison Graziani on 6/18/2021
   #   -Added parameter and edited code
   # Updates @newsPage to hold the hyperlink of the given link parameter
   def connect_page(link)
     @news_page = @agent.get link
   end
 
-  # Madison
-  # scrape the content of the news page
+  # Edited by Madison Graziani on 6/19/2021
+  #   -Added the original version of code
+  # Scrapes the contents of the news page and returns it as text
   def scrape_content
-    @news_page
+    #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
+    content = @news_page.xpath('//section/p')
+    content.text
   end
 
-  # Madison
-  # scrape the time of the news page
-  def scrape_time
-
+  # Edited by Madison Graziani on 6/18/2021
+  #   -Added the original version of code
+  # Scrapes the date the article was published and returns it as text
+  def scrape_date
+    #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
+    date = @news_page.xpath('//li[@class="post-date"]')
+    date.text
   end
 
-  # Madison
-  # scrape the suthor of the news page
+  # Edited by Madison Graziani on 6/18/2021
+  #   -Added the original version of code
+  # Scrapes the name of the article's author and returns it as text
   def scrape_author
-
+    #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
+    author = @news_page.xpath('//li[@class="post-author"]/a')
+    author.text
   end
 
   # display the news, search format (1)
@@ -313,8 +329,7 @@ end
 #Test
 #page = Page.new
 #scraper = Scraper.new
-#scraper.display
-#puts array2
+#scraper.scrape_all
 #page.goto_nextPage
 #page.goto_lastPage
 #puts page.has_previousPage?
