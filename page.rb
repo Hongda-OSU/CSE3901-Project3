@@ -11,6 +11,7 @@ class Page
     @current_page = @agent.get @@URL
   end
 
+  # TODO merge these two?
   # Created (Hongda Lin, 6/16)
   # update: change method name to goto_next_page (Hongda 6/19)
   #
@@ -57,6 +58,7 @@ class Page
     end
   end
 
+  # TODO instead of moving forward, directly get the link (/page/number)
   # Created (Hongda Lin, 6/17)
   # update: change method name to goto_particular_page and the new version is much quicker (Hongda 6/19)
   #
@@ -65,6 +67,8 @@ class Page
     @current_page = agent.get @@URL.concat "/","page","/",page_number.to_s,"/"
   end
 
+  # TODO merge these two?
+  # TODO trim greatly
   # Created (Hongda Lin, 6/16)
   # update: change method name to has_next_page?, cannot trim because it checks nil (Hongda 6/19)
   #
@@ -74,6 +78,7 @@ class Page
      @agent.page.links.find{|link| link.text == "Next »"} == nil ? false : true
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/16)
   # update: change method name to has_previous_page?, cannot trim because it checks nil (Hongda 6/19)
   #
@@ -83,6 +88,7 @@ class Page
      @agent.page.links.find{|link| link.text == "« Prev"} == nil ? false : true
   end
 
+  # TODO merge titles and links into a hash or something
   # Created (Hongda Lin, 6/17)
   # trending news are the three news display on the middle, only need to scrape once, but need to keep update
   #
@@ -106,6 +112,7 @@ class Page
     arr_links
   end
 
+  # TODO merge titles and links into a hash or something
   # Created (Hongda Lin, 6/17)
   # mask news are the news display on the top, only need to scrape once, but need to keep update
   # @return
@@ -128,6 +135,7 @@ class Page
     arr_links
   end
 
+  # TODO merge titles and links into a hash or something
   # Created (Hongda Lin, 6/16)
   #
   # titles has class:  Nokogiri::XML::NodeSet
@@ -157,6 +165,7 @@ class Page
     arr_links
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # update: change method name to last_page_num (Hongda 6/19)
   #
@@ -165,6 +174,7 @@ class Page
     @current_page.xpath('//a[@class="page-numbers"]').to_a[-1].text
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # update: change method name to current_page_num (Hongda 6/19)
   #
@@ -173,6 +183,7 @@ class Page
     @current_page.xpath('//span[@class="page-numbers current"]').text
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # update: change method name to is_last_page? (Hongda 6/19)
   #
@@ -181,6 +192,7 @@ class Page
     !self.has_next_page?
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # update: change method name to is_first_page? (Hongda 6/19)
   #

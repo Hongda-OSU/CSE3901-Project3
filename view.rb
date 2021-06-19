@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
+# TODO might not need to be a class - module?
 # Created 6/17/21 by Samuel Gernstetter
 # Methods to input and output data
 class View
+  # TODO add variable definitions
+  # TODO merge these two methods - splat operator?
   # Created 6/17/21 by Samuel Gernstetter
   # print a numbered list of articles on a page
-  def article_list(num, articles)
+  def article_list num, articles
     puts "Page #{num}"
     num = 1
-    articles.each do |headline|
-      puts "#{num}) #{headline}"
-    end
+    articles.each {|headline| puts "#{num}) #{headline}"}
   end
 
   # Created 6/19/21 by Samuel Gernstetter
@@ -18,9 +19,7 @@ class View
   def search_results(articles)
     puts 'Search Results:'
     num = 1
-    articles.each do |headline|
-      puts "#{num}) #{headline}"
-    end
+    articles.each {|headline| puts "#{num}) #{headline}"}
   end
 
   # Created 6/17/21 by Samuel Gernstetter
