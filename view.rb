@@ -4,9 +4,19 @@
 # Methods to input and output data
 class View
   # Created 6/17/21 by Samuel Gernstetter
-  # print a numbered list of articles
+  # print a numbered list of articles on a page
   def article_list(num, articles)
     puts "Page #{num}"
+    num = 1
+    articles.each do |headline|
+      puts "#{num}) #{headline}"
+    end
+  end
+
+  # Created 6/19/21 by Samuel Gernstetter
+  # print a numbered list of articles matching search terms
+  def search_results(articles)
+    puts 'Search Results:'
     num = 1
     articles.each do |headline|
       puts "#{num}) #{headline}"
