@@ -2,85 +2,94 @@ require 'mechanize'
 require 'nokogiri'
 
 # created by: Hongda Lin (Date: 6/16/2021)
+# update: change @currentPage to @current_page (Hongda 6/19)
 class Page
   attr_reader :agent, :current_page
   @@URL = "https://www.thelantern.com/campus/"
   def initialize
     @agent = Mechanize.new
-    @currentPage = @agent.get @@URL
+    @current_page = @agent.get @@URL
   end
 
   # Created (Hongda Lin, 6/16)
+  # update: change method name to goto_next_page (Hongda 6/19)
+  #
   # Requires:
-  #   self.has_nextPage == true
+  #   self.has_next_page == true
   # Set:
-  #   @currentPage to the next page of current page
-  def goto_nextPage
+  #   @current_page to the next page of current page
+  def goto_next_page
     next_page_link = @agent.page.links.find{|link| link.text == "Next »"}
     next_page_link.resolved_uri
-    @currentPage = next_page_link.click
+    @current_page = next_page_link.click
   end
 
   # Created (Hongda Lin, 6/16)
+  # update: change method name to goto_previous_page (Hongda 6/19)
+  #
   # Requires:
-  #   self.has_previousPage == true
+  #   self.has_previous_page == true
   # Set:
-  #   @currentPage to the previous page of current page
-  def goto_previousPage
+  #   @current_page to the previous page of current page
+  def goto_previous_page
     previous_page_link = @agent.page.links.find{|link| link.text == "« Prev"}
     previous_page_link.resolved_uri
-    @currentPage = previous_page_link.click
+    @current_page = previous_page_link.click
   end
 
   # Created (Hongda Lin, 6/17)
-  # Page navigate to the first page
-  def goto_firstPage
-    @currentPage = agent.get @@URL
-  end
-
-  # Created (Hongda Lin, 6/17)
-  # Page navigate to the last page
-  def goto_lastPage
-    unless self.current_pageNum == self.last_pageNum
-      lastPage = self.last_pageNum
-      lastPage_page_link = @agent.page.links.find{|link| link.text == lastPage}
-      lastPage_page_link.resolved_uri
-      @currentPage = lastPage_page_link.click
-    end
-  end
-
-  # Created (Hongda Lin, 6/17)
-  # Page navigate to the page whose number is provide as a integer
+  # update: change method name to goto_first_page (Hongda 6/19)
   #
-  # Haven't have a good idea about it, might need to change the query section on the link
-  # This is a stupid way to do it
-  def goto_particularPage pageNumber
-    self.goto_firstPage
-    pageNumber.times do
-      self.goto_nextPage
+  # Page navigate to the first page
+  def goto_first_page
+    @current_page = agent.get @@URL
+  end
+
+  # Created (Hongda Lin, 6/17)
+  # update: change method name to goto_last_page (Hongda 6/19)
+  #
+  # Page navigate to the last page
+  def goto_last_page
+    unless self.current_page_num == self.last_page_num
+      lastPage_page_link = @agent.page.links.find{|link| link.text == self.last_page_num}
+      lastPage_page_link.resolved_uri
+      @current_page = lastPage_page_link.click
     end
   end
 
-  # Created (Hongda Lin, 6/16)
-  # @return
-  #   true if there is a next page, false otherwise
-  def has_nextPage?
-    @agent.page.links.find{|link| link.text == "Next »"} == nil ? false : true
+  # Created (Hongda Lin, 6/17)
+  # update: change method name to goto_particular_page and the new version is much quicker (Hongda 6/19)
+  #
+  # Page navigate to the page whose number is provide as a integer
+  def goto_particular_page page_number
+    @current_page = agent.get @@URL.concat "/","page","/",page_number.to_s,"/"
   end
 
   # Created (Hongda Lin, 6/16)
+  # update: change method name to has_next_page?, cannot trim because it checks nil (Hongda 6/19)
+  #
   # @return
   #   true if there is a next page, false otherwise
-  def has_previousPage?
-    @agent.page.links.find{|link| link.text == "« Prev"} == nil ? false : true
+  def has_next_page?
+     @agent.page.links.find{|link| link.text == "Next »"} == nil ? false : true
+  end
+
+  # Created (Hongda Lin, 6/16)
+  # update: change method name to has_previous_page?, cannot trim because it checks nil (Hongda 6/19)
+  #
+  # @return
+  #   true if there is a next page, false otherwise
+  def has_previous_page?
+     @agent.page.links.find{|link| link.text == "« Prev"} == nil ? false : true
   end
 
   # Created (Hongda Lin, 6/17)
   # trending news are the three news display on the middle, only need to scrape once, but need to keep update
+  #
   # @return
   #   the title of trending news in an Array, each title is represented as a string
   def trend_news_titles
-    titles = @currentPage.xpath('//h2[@class="post-title"]/a')
+    titles = @current_page.xpath('//h2[@class="post-title"]/a')
     arr_titles = Array.new
     titles.each_with_index {|title,index| arr_titles<<title.text if index < 3}
     arr_titles
@@ -91,7 +100,7 @@ class Page
   # @return
   #   the links of trending news in an Array, each link is represented as a string
   def trend_news_links
-    links = @currentPage.xpath('//h2[@class="post-title"]/a/@href')
+    links = @current_page.xpath('//h2[@class="post-title"]/a/@href')
     arr_links = Array.new
     links.each_with_index {|link,index| arr_links<<link.text if index < 3}
     arr_links
@@ -102,7 +111,7 @@ class Page
   # @return
   #   the title of mask news in an Array, each title is represented as a string
   def mask_news_titles
-    titles = @currentPage.xpath('//a[@class="mask-title"]')
+    titles = @current_page.xpath('//a[@class="mask-title"]')
     arr_titles = Array.new
     titles.each {|title| arr_titles<<title.text}
     arr_titles
@@ -113,7 +122,7 @@ class Page
   # @return
   #    the links of mask news in an Array, each link is represented as a string
   def mask_news_links
-    links = @currentPage.xpath('//a[@class="mask-title"]/@href')
+    links = @current_page.xpath('//a[@class="mask-title"]/@href')
     arr_links = Array.new
     links.each {|link| arr_links<<link.text}
     arr_links
@@ -127,7 +136,7 @@ class Page
   # @return
   #   the titles of news of current page in an Array, each title is represented as a string, not include the trend news and head news
   def reg_news_titles
-    titles = @currentPage.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a')
+    titles = @current_page.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a')
     arr_titles = Array.new
     titles.each{|title| arr_titles<<title.text}
     arr_titles
@@ -142,36 +151,42 @@ class Page
   #   the links of news of current page in an Array, each link is represented as a string, not include the trend news and head news
   #
   def reg_news_links
-    links = @currentPage.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a/@href')
+    links = @current_page.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a/@href')
     arr_links = Array.new
     links.each{|link| arr_links << link.text}
     arr_links
   end
 
   # Created (Hongda Lin, 6/17)
+  # update: change method name to last_page_num (Hongda 6/19)
+  #
   # Return last page number
-  def last_pageNum
-    arr_pageNumbers = @currentPage.xpath('//a[@class="page-numbers"]').to_a
-    arr_pageNumbers[-1].text
+  def last_page_num
+    @current_page.xpath('//a[@class="page-numbers"]').to_a[-1].text
   end
 
   # Created (Hongda Lin, 6/17)
+  # update: change method name to current_page_num (Hongda 6/19)
+  #
   # Return current page number
-  def current_pageNum
-    current_pageNumber = @currentPage.xpath('//span[@class="page-numbers current"]')
-    current_pageNumber.text
+  def current_page_num
+    @current_page.xpath('//span[@class="page-numbers current"]').text
   end
 
   # Created (Hongda Lin, 6/17)
+  # update: change method name to is_last_page? (Hongda 6/19)
+  #
   # Return true if current page is last page, false otherwise
-  def is_lastPage?
-    self.has_nextPage? ? false:true
+  def is_last_page?
+    !self.has_next_page?
   end
 
   # Created (Hongda Lin, 6/17)
+  # update: change method name to is_first_page? (Hongda 6/19)
+  #
   # Return true if current page is first page, false otherwise
-  def is_firstPage?
-    self.has_previousPage? ? false:true
+  def is_first_page?
+    !self.has_previous_page?
   end
 
   # Created (Hongda Lin, 6/17)
@@ -180,3 +195,8 @@ class Page
     self.reg_news_titles
   end
 end
+
+
+page = Page.new
+puts page.is_first_page?
+puts page.info
