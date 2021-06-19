@@ -14,11 +14,11 @@ class Scraper
     @page = Page.new
     @information = Hash.new #store news title as Hash key and news link as Hash value, need to check if news title already exist in hash when store
     # Adds header news stories to @information
-    @page.head_news_titles().length().times {|i| @information[@page.head_news_titles[i].to_sym] = @page.mask_newsLinks[i] }
+    @page.mask_news_titles().length().times {|i| @information[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i] }
     # Adds trending news stories to @information
-    @page.trend_news_titles().length().times {|i| @information[@page.trend_news_titles[i].to_sym] = @page.trending_newsLinks[i] }
+    @page.trend_news_titles().length().times {|i| @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] }
     # Adds general news stories to @information
-    @page.reg_news_titles().length().times {|i| @information[@page.reg_news_titles[i].to_sym] = @page.currentPage_newsLinks[i] }
+    @page.reg_news_titles().length().times {|i| @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] }
     @agent = Mechanize.new
     @news_page = nil
   end
@@ -139,8 +139,10 @@ class Page
   end
 
   # Created (Hongda Lin, 6/16)
-  # Requires: self.has_nextPage == true
-  # Set @currentPage to the next page of current page
+  # Requires:
+  #   self.has_nextPage == true
+  # Set:
+  #   @currentPage to the next page of current page
   def goto_nextPage
     next_page_link = @agent.page.links.find{|link| link.text == "Next »"}
     next_page_link.resolved_uri
@@ -148,8 +150,10 @@ class Page
   end
 
   # Created (Hongda Lin, 6/16)
-  # Requires: self.has_previousPage == true
-  # Set @currentPage to the previous page of current page
+  # Requires:
+  #   self.has_previousPage == true
+  # Set:
+  #   @currentPage to the previous page of current page
   def goto_previousPage
     previous_page_link = @agent.page.links.find{|link| link.text == "« Prev"}
     previous_page_link.resolved_uri
@@ -165,8 +169,8 @@ class Page
   # Created (Hongda Lin, 6/17)
   # Page navigate to the last page
   def goto_lastPage
-    unless self.current_numPage == self.total_numPage
-      lastPage = self.total_numPage
+    unless self.current_pageNum == self.last_pageNum
+      lastPage = self.last_pageNum
       lastPage_page_link = @agent.page.links.find{|link| link.text == lastPage}
       lastPage_page_link.resolved_uri
       @currentPage = lastPage_page_link.click
@@ -186,20 +190,23 @@ class Page
   end
 
   # Created (Hongda Lin, 6/16)
-  # Return true if there is a next page, false otherwise
+  # @return
+  #   true if there is a next page, false otherwise
   def has_nextPage?
     @agent.page.links.find{|link| link.text == "Next »"} == nil ? false : true
   end
 
   # Created (Hongda Lin, 6/16)
-  # Return true if there is a next page, false otherwise
+  # @return
+  #   true if there is a next page, false otherwise
   def has_previousPage?
     @agent.page.links.find{|link| link.text == "« Prev"} == nil ? false : true
   end
 
   # Created (Hongda Lin, 6/17)
-  # trending news is the three news display on the middle, only need to scrape once
-  # Return the title of trending news
+  # trending news are the three news display on the middle, only need to scrape once, but need to keep update
+  # @return
+  #   the title of trending news in an Array, each title is represented as a string
   def trend_news_titles
     titles = @currentPage.xpath('//h2[@class="post-title"]/a')
     arr_titles = Array.new
@@ -208,9 +215,10 @@ class Page
   end
 
   # Created (Hongda Lin, 6/17)
-  # trending news is the three news display on the middle, only need to scrape once
-  # Return the links of trending news
-  def trending_newsLinks
+  # trending news are the three news display on the middle, only need to scrape once, but need to keep update
+  # @return
+  #   the links of trending news in an Array, each link is represented as a string
+  def trend_news_links
     links = @currentPage.xpath('//h2[@class="post-title"]/a/@href')
     arr_links = Array.new
     links.each_with_index {|link,index| arr_links<<link.text if index < 3}
@@ -218,9 +226,10 @@ class Page
   end
 
   # Created (Hongda Lin, 6/17)
-  # mask news is the news display on the top, only need to scrape once
-  # Return the title of mask news
-  def head_news_titles
+  # mask news are the news display on the top, only need to scrape once, but need to keep update
+  # @return
+  #   the title of mask news in an Array, each title is represented as a string
+  def mask_news_titles
     titles = @currentPage.xpath('//a[@class="mask-title"]')
     arr_titles = Array.new
     titles.each {|title| arr_titles<<title.text}
@@ -228,9 +237,10 @@ class Page
   end
 
   # Created (Hongda Lin, 6/17)
-  # mask news is the news display on the top, only need to scrape once
-  # Return the link of mask news
-  def mask_newsLinks
+  # mask news are the news display on the top, only need to scrape once, but need to keep update
+  # @return
+  #    the links of mask news in an Array, each link is represented as a string
+  def mask_news_links
     links = @currentPage.xpath('//a[@class="mask-title"]/@href')
     arr_links = Array.new
     links.each {|link| arr_links<<link.text}
@@ -242,7 +252,8 @@ class Page
   # titles has class:  Nokogiri::XML::NodeSet
   # each title inside titles has class: Nokogiri::XML::Element
   #
-  # Return the titles of news of current page, not include the trending news and mask news
+  # @return
+  #   the titles of news of current page in an Array, each title is represented as a string, not include the trend news and head news
   def reg_news_titles
     titles = @currentPage.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a')
     arr_titles = Array.new
@@ -255,10 +266,10 @@ class Page
   # links has class:  Nokogiri::XML::NodeSet
   # each link inside links has class: Nokogiri::XML::Attr
   #
-  # Return an array of strings (links)
+  # @return
+  #   the links of news of current page in an Array, each link is represented as a string, not include the trend news and head news
   #
-  # Problem: for each page the first three link are always the same
-  def currentPage_newsLinks
+  def reg_news_links
     links = @currentPage.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a/@href')
     arr_links = Array.new
     links.each{|link| arr_links << link.text}
@@ -267,14 +278,14 @@ class Page
 
   # Created (Hongda Lin, 6/17)
   # Return last page number
-  def total_numPage
+  def last_pageNum
     arr_pageNumbers = @currentPage.xpath('//a[@class="page-numbers"]').to_a
     arr_pageNumbers[-1].text
   end
 
   # Created (Hongda Lin, 6/17)
   # Return current page number
-  def current_numPage
+  def current_pageNum
     current_pageNumber = @currentPage.xpath('//span[@class="page-numbers current"]')
     current_pageNumber.text
   end
@@ -310,7 +321,7 @@ end
 #puts page.has_nextPage?
 #page.goto_lastPage
 #puts page.is_lastPage?
-#puts page.mask_newsLinks
+#puts page.mask_news_links
 #r = scraper.create_regexp ['abc', 'def']
 #puts r.match?('ab def')
 
