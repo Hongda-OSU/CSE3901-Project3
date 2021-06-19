@@ -10,6 +10,7 @@ class Page
     @currentPage = @agent.get @@URL
   end
 
+  # TODO merge these two?
   # Created (Hongda Lin, 6/16)
   # Requires:
   #   self.has_nextPage == true
@@ -49,6 +50,7 @@ class Page
     end
   end
 
+  # TODO instead of moving forward, directly get the link (/page/number)
   # Created (Hongda Lin, 6/17)
   # Page navigate to the page whose number is provide as a integer
   #
@@ -61,6 +63,8 @@ class Page
     end
   end
 
+  # TODO merge these two?
+  # TODO trim greatly
   # Created (Hongda Lin, 6/16)
   # @return
   #   true if there is a next page, false otherwise
@@ -68,6 +72,7 @@ class Page
     @agent.page.links.find{|link| link.text == "Next »"} == nil ? false : true
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/16)
   # @return
   #   true if there is a next page, false otherwise
@@ -75,6 +80,7 @@ class Page
     @agent.page.links.find{|link| link.text == "« Prev"} == nil ? false : true
   end
 
+  # TODO merge titles and links into a hash or something
   # Created (Hongda Lin, 6/17)
   # trending news are the three news display on the middle, only need to scrape once, but need to keep update
   # @return
@@ -97,6 +103,7 @@ class Page
     arr_links
   end
 
+  # TODO merge titles and links into a hash or something
   # Created (Hongda Lin, 6/17)
   # mask news are the news display on the top, only need to scrape once, but need to keep update
   # @return
@@ -119,6 +126,7 @@ class Page
     arr_links
   end
 
+  # TODO merge titles and links into a hash or something
   # Created (Hongda Lin, 6/16)
   #
   # titles has class:  Nokogiri::XML::NodeSet
@@ -148,6 +156,7 @@ class Page
     arr_links
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # Return last page number
   def last_pageNum
@@ -155,6 +164,7 @@ class Page
     arr_pageNumbers[-1].text
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # Return current page number
   def current_pageNum
@@ -162,12 +172,14 @@ class Page
     current_pageNumber.text
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # Return true if current page is last page, false otherwise
   def is_lastPage?
     self.has_nextPage? ? false:true
   end
 
+  # TODO trim greatly
   # Created (Hongda Lin, 6/17)
   # Return true if current page is first page, false otherwise
   def is_firstPage?
