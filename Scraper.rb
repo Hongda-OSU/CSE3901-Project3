@@ -17,7 +17,9 @@ class Scraper
     @news_page = nil
   end
 
-  # Madison
+  # Edited by Madison Graziani on 6/19/2021
+  #   -Added the original version of code
+  #   -Changed code to loop and get all pages
   # Fills @information with article titles and links while making sure to check for duplicates
   def scrape_all
     # Adds header news stories to @information
@@ -26,9 +28,12 @@ class Scraper
     # Adds trending news stories to @information
     @page.trend_news_titles().length().times {|i| unless duplicate_title?(@page.trend_news_titles[i])
                                                     @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] end}
-    # Adds general news stories to @information
-    @page.reg_news_titles().length().times {|i| unless duplicate_title?(@page.reg_news_titles[i])
-                                                  @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] end}
+    until @page.is_lastPage?
+      # Adds general news stories to @information
+      @page.reg_news_titles().length().times {|i| unless duplicate_title?(@page.reg_news_titles[i])
+                                                    @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] end}
+      @page.goto_nextPage
+    end
   end
 
   # Edited by Madison Graziani on 6/19/2021
