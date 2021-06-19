@@ -14,10 +14,12 @@ class View
   end
 
   # Created 6/17/21 by Samuel Gernstetter
+  # Edited 6/18/21 by Drew Jackson
+  #   added search option to prompt
   # prompt the user to navigate the article list
   def menu_prompt
     print "Enter an article's number to read it, enter 'next'/'previous' to go to the next/previous page if present, "
-    print "or enter 'quit' to exit the program: "
+    print "enter search to search articles, or enter 'quit' to exit the program: "
     gets.chomp
   end
 

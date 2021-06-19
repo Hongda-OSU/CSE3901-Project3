@@ -46,7 +46,6 @@ class Scraper
   # Updates @newsPage to hold the hyperlink of the given link parameter
   def connect_page(link)
     @news_page = @agent.get link
-
   end
 
   # Madison
