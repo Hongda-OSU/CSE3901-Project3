@@ -27,6 +27,32 @@ class Page
     @current_page = page_link.click
   end
 
+  # Created (Hongda Lin, 6/16)
+  # update: change method name to goto_next_page (Hongda 6/19)
+  #
+  # Requires:
+  #   self.has_next_page == true
+  # Set:
+  #   @current_page to the next page of current page
+  def goto_next_page
+    next_page_link = @agent.page.links.find{|link| link.text == "Next »"}
+    next_page_link.resolved_uri
+    @current_page = next_page_link.click
+  end
+
+  # Created (Hongda Lin, 6/16)
+  # update: change method name to goto_previous_page (Hongda 6/19)
+  #
+  # Requires:
+  #   self.has_previous_page == true
+  # Set:
+  #   @current_page to the previous page of current page
+  def goto_previous_page
+    previous_page_link = @agent.page.links.find{|link| link.text == "« Prev"}
+    previous_page_link.resolved_uri
+    @current_page = previous_page_link.click
+  end
+
   # Created (Hongda Lin, 6/17)
   # update: change method name to goto_first_page (Hongda 6/19)
   #
@@ -191,7 +217,3 @@ class Page
     self.reg_news_titles
   end
 end
-
-page = Page.new
-puts page.is_first_page?
-puts page.info
