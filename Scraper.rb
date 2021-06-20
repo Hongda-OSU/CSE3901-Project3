@@ -30,32 +30,68 @@ class Scraper
   # Edited by Madison Graziani on 6/19/2021
   #   -Added the original version of code
   #   -Changed code to loop and get all pages
-  # Fills @information with article titles and links while making sure to check for duplicates
+  # Edited by Hongda Lin on 6/20/2021
+  #   -Reverted code to one page with no duplicate check
+  # Edited by Madison Graziani on 6/20/2021
+  #   -Changed parameter name and simplified code
+  # Fills @mask_news with article titles and links
   def scrape_mask_news
-    mask_news = Hash.new
-    @page.mask_news_titles.length.times {|i| mask_news[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i]}
-    @mask_news = mask_news
+    # Resets hash to take info from new page
+    @mask_news = Hash.new
+    @page.mask_news_titles.length.times {|index| @mask_news[@page.mask_news_titles[index].to_sym] = @page.mask_news_links[index]}
   end
 
+  # Edited by Madison Graziani on 6/19/2021
+  #   -Added the original version of code
+  #   -Changed code to loop and get all pages
+  # Edited by Hongda Lin on 6/20/2021
+  #   -Reverted code to one page with no duplicate check
+  # Edited by Madison Graziani on 6/20/2021
+  #   -Changed parameter name and simplified code
+  # Fills @trend_news with article titles and links
   def scrape_trend_news
-    trend_news = Hash.new
-    @page.trend_news_titles.length.times {|i| trend_news[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i]}
-    @trend_news = trend_news
+    # Resets hash to take info from new page
+    @trend_news = Hash.new
+    @page.trend_news_titles.length.times {|index| @trend_news[@page.trend_news_titles[index].to_sym] = @page.trend_news_links[index]}
   end
 
+  # Edited by Madison Graziani on 6/19/2021
+  #   -Added the original version of code
+  #   -Changed code to loop and get all pages
+  # Edited by Hongda Lin on 6/20/2021
+  #   -Reverted code to one page with no duplicate check
+  # Edited by Madison Graziani on 6/20/2021
+  #   -Changed parameter name and simplified code
+  # Fills @page_news with article titles and links
   def scrape_page_news
-    page_news = Hash.new
-    @page.reg_news_titles.length.times {|i| page_news[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i]}
-    @page_news = page_news
+    # Resets hash to take info from new page
+    @page_news = Hash.new
+    @page.reg_news_titles.length.times {|index| @page_news[@page.reg_news_titles[index].to_sym] = @page.reg_news_links[index]}
   end
 
-  def get_link
-
+  #Edited by Madison Graziani on 6/20/2021
+  #   -Added original version of code
+  # This method searches the specified hash for the correct link to a specified news article
+  # @param choice
+  #       An integer specifying the type of news
+  # @param title
+  #       A string that is the title of a news story
+  def get_link choice, title
+    case choice
+    when 1
+      @mask_news[title]
+    when 2
+      @trend_news[title]
+    when 3
+      @page_news[title]
+    end
   end
 
-  # display the news, search format (1)
-  # @param choice is Integer
-  #
+  #Edited by Hongda Lin on 6/20/2021
+  #   -Added original version of code
+  # This method prints the specified hash of news titles
+  # @param choice
+  #       An integer specifying the type of news
   def list_news choice
     case choice
     when 1
@@ -161,7 +197,10 @@ end
 
 scraper = Scraper.new
 scraper.scrape_page_news
-scraper.list_news 3
+@page_news.each_key { |key| puts key  }
+string = "Ohio State research review suggests strong connection between narcissism and aggression"
+link = @page_news[string.to_sym]
+connect_page link
 
 
 
