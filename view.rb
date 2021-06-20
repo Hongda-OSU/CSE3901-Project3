@@ -5,21 +5,20 @@
 # Methods to input and output data
 class View
   # TODO add variable definitions
-  # TODO merge these two methods - splat operator?
   # Created 6/17/21 by Samuel Gernstetter
+  # Edited 6/19/21 by Samuel Gernstetter
   # print a numbered list of articles on a page
-  def article_list num, articles
-    puts "Page #{num}"
+  def article_list(articles, *page_num)
+    if page_num.length > 0
+      puts "Page #{page_num[0]}"
+    else
+      puts 'Search Results:'
+    end
     num = 1
-    articles.each {|headline| puts "#{num}) #{headline}"}
-  end
-
-  # Created 6/19/21 by Samuel Gernstetter
-  # print a numbered list of articles matching search terms
-  def search_results(articles)
-    puts 'Search Results:'
-    num = 1
-    articles.each {|headline| puts "#{num}) #{headline}"}
+    articles.each do |headline|
+      puts "#{num}) #{headline}"
+      num = num + 1
+    end
   end
 
   # Created 6/17/21 by Samuel Gernstetter
@@ -34,8 +33,8 @@ class View
 
   # Created 6/19/21 by Samuel Gernstetter
   # prompt the user to select a page number
-  def page_prompt(num)
-    print "Enter a page number to go to that page of articles (1-#{num}): "
+  def page_prompt(page_num)
+    print "Enter a page number to go to that page of articles (1-#{page_num}): "
     gets.chomp!
   end
 

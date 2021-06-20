@@ -62,29 +62,29 @@ class Scraper
 
   # Edited by Madison Graziani on 6/19/2021
   #   -Added the original version of code
+  # Edited 6/19/21 by Samuel Gernstetter
   # Scrapes the contents of the news page and returns it as text
   def scrape_content
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    content = @news_page.xpath('//section/p')
-    content.text
+    @news_page.xpath('//section/p').text
   end
 
   # Edited by Madison Graziani on 6/18/2021
   #   -Added the original version of code
+  # Edited 6/19/21 by Samuel Gernstetter
   # Scrapes the date the article was published and returns it as text
   def scrape_date
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    date = @news_page.xpath('//li[@class="post-date"]')
-    date.text
+    @news_page.xpath('//li[@class="post-date"]').text
   end
 
   # Edited by Madison Graziani on 6/18/2021
   #   -Added the original version of code
+  # Edited 6/19/21 by Samuel Gernstetter
   # Scrapes the name of the article's author and returns it as text
   def scrape_author
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    author = @news_page.xpath('//li[@class="post-author"]/a')
-    author.text
+    @news_page.xpath('//li[@class="post-author"]/a').text
   end
 
   # display the news, search format (1)
