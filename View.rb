@@ -7,6 +7,7 @@ class View
   # TODO add variable definitions
   # Created 6/17/21 by Samuel Gernstetter
   # Edited 6/19/21 by Samuel Gernstetter
+  #   merge article_list and search_results
   # print a numbered list of articles on a page
   def article_list(articles, *page_num)
     if page_num.length > 0

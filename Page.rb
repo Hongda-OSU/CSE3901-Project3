@@ -21,36 +21,10 @@ class Page
   #   (direction == "Next »" and self.has_next_page == true) or (direction == "« Prev" and self.has_previous_page == true)
   # Set:
   #   @current_page to the next or previous page of current page
-  def goto_page direction
+  def goto_page(direction)
     page_link = @agent.page.links.find{|link| link.text == direction}
     page_link.resolved_uri
     @current_page = page_link.click
-  end
-
-  # Created (Hongda Lin, 6/16)
-  # update: change method name to goto_next_page (Hongda 6/19)
-  #
-  # Requires:
-  #   self.has_next_page == true
-  # Set:
-  #   @current_page to the next page of current page
-  def goto_next_page
-    next_page_link = @agent.page.links.find{|link| link.text == "Next »"}
-    next_page_link.resolved_uri
-    @current_page = next_page_link.click
-  end
-
-  # Created (Hongda Lin, 6/16)
-  # update: change method name to goto_previous_page (Hongda 6/19)
-  #
-  # Requires:
-  #   self.has_previous_page == true
-  # Set:
-  #   @current_page to the previous page of current page
-  def goto_previous_page
-    previous_page_link = @agent.page.links.find{|link| link.text == "« Prev"}
-    previous_page_link.resolved_uri
-    @current_page = previous_page_link.click
   end
 
   # Created (Hongda Lin, 6/17)
@@ -77,7 +51,7 @@ class Page
   # update: change method name to goto_particular_page and the new version is much quicker (Hongda 6/19)
   #
   # Page navigate to the page whose number is provide as a integer
-  def goto_particular_page page_number
+  def goto_particular_page(page_number)
     @current_page = agent.get @@URL.concat "/","page","/",page_number.to_s,"/"
   end
 
@@ -218,3 +192,6 @@ class Page
   end
 end
 
+page = Page.new
+puts page.is_first_page?
+puts page.info
