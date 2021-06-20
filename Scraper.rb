@@ -195,12 +195,12 @@ class Scraper
 
 end
 
-scraper = Scraper.new
-scraper.scrape_page_news
-@page_news.each_key { |key| puts key  }
-string = "Ohio State research review suggests strong connection between narcissism and aggression"
-link = @page_news[string.to_sym]
-connect_page link
+#scraper = Scraper.new
+#scraper.scrape_page_news
+#@page_news.each_key { |key| puts key  }
+#string = "Ohio State research review suggests strong connection between narcissism and aggression"
+#link = @page_news[string.to_sym]
+#connect_page link
 
 
 

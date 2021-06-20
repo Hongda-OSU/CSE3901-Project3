@@ -76,6 +76,20 @@ class Page
      @agent.page.links.find{|link| link.text == "« Prev"} != nil
   end
 
+  # Created (Hongda Lin, 6/17)
+  # trending news are the three news display on the middle, only need to scrape once, but need to keep update
+  # Edited 6/20/21 by Samuel Gernstetter
+  #   merge trend_news_titles and trend_news_links into trend_news, use a hash
+  # @return
+  #   the title of trending news in an Array, each title is represented as a string
+  def trend_news
+    trend = Hash.new
+    titles = @current_page.xpath('//h2[@class="post-title"]/a')
+    links = @current_page.xpath('//h2[@class="post-title"]/a/@href')
+    titles.each_with_index { |title, index| trend[title.text] = links[index].text if index < 3}
+    trend
+  end
+
   # TODO merge titles and links into a hash or something
   # Created (Hongda Lin, 6/17)
   # trending news are the three news display on the middle, only need to scrape once, but need to keep update
@@ -192,6 +206,6 @@ class Page
   end
 end
 
-page = Page.new
-puts page.is_first_page?
-puts page.info
+#page = Page.new
+#puts page.is_first_page?
+#puts page.info

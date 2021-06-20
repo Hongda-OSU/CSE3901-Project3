@@ -34,8 +34,8 @@ class View
 
   # Created 6/19/21 by Samuel Gernstetter
   # prompt the user to select a page number
-  def page_prompt(page_num)
-    print "Enter a page number to go to that page of articles (1-#{page_num}): "
+  def page_prompt(last_page_num)
+    print "Enter a page number to go to that page of articles (1-#{last_page_num}): "
     gets.chomp!
   end
 
@@ -60,8 +60,10 @@ class View
   end
 
   # Created 6/17/21 by Drew Jackson
+  # Edited 6/20/21 by Samuel Gernstetter
+  #   change name to search_prompt
   # Prompt user for a keyword to search for
-  def search_keyword
+  def search_prompt
     print "Enter search term: "
     gets.chomp!
   end
