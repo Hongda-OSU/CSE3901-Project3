@@ -87,6 +87,24 @@ class Scraper
     end
   end
 
+  # Created by Hongda Lin on 6/20/2021
+  # @param choice1
+  #       choice1 is the integer user enter in the first menu for select what kind of news
+  # @param choice2
+  #       choice2 is the integer in second menu for what news they want to look.
+  #
+  # @return a specific news title, will be used in get_link
+  def get_title choice1, choice2
+    case choice1
+    when 1
+      @mask_news.key choice2
+    when 2
+      @trend_news.key choice2
+    when 3
+      @page_news.key choice2
+    end
+  end
+
   #Edited by Hongda Lin on 6/20/2021
   #   -Added original version of code
   # This method prints the specified hash of news titles
@@ -197,10 +215,9 @@ end
 
 #scraper = Scraper.new
 #scraper.scrape_page_news
-#@page_news.each_key { |key| puts key  }
-#string = "Ohio State research review suggests strong connection between narcissism and aggression"
-#link = @page_news[string.to_sym]
-#connect_page link
+#symbol = "Ohio State research review suggests strong connection between narcissism and aggression".to_sym
+#link = scraper.page_news[symbol]
+#puts link
 
 
 
