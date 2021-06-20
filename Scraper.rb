@@ -1,17 +1,27 @@
 # created by: Hongda Lin (Date: 6/16/2021)
 require 'mechanize'
 require 'nokogiri'
+require_relative 'Page'
 
 # Created by Hongda Lin (Date: 6/16/2021)
 # Edited 6/18/2021 by Madison Graziani
 #   -Added initialization for @information and added comments and method code
 # Edited by: 6/18/2021 by Drew Jackson
 #   -Added keyword search
+# Edited by: 6/20/2021 by Hongda Lin
+#   -Scraper class only scrape the current page news and store them in different hash, when goto_next/previous page, these hash will
+#   be update to news in that new page. User could choose to see mask news, trend news or page news by enter number (View), the titles
+#   will be displayed and user could choose an article by number to see the content.
 class Scraper
+  attr_reader :page, :mask_news, :trend_news, :page_news, :news_page
   def initialize
     @page = Page.new
-    #Stores article titles and their respective links as Hash pairs
-    @information = Hash.new
+    #Store the current page mask news titles and links as a hash, num 2
+    @mask_news = nil
+    #Store the current page trend news titles and links as a hash, num 3
+    @trend_news = nil
+    #Store the current page news titles and links as a hash, num 12
+    @page_news = nil
     @agent = Mechanize.new
     #Webpage of one article
     @news_page = nil
@@ -21,42 +31,46 @@ class Scraper
   #   -Added the original version of code
   #   -Changed code to loop and get all pages
   # Fills @information with article titles and links while making sure to check for duplicates
-  def scrape_all
-    # Adds header news stories to @information
-    @page.mask_news_titles().length().times {|i| unless duplicate_title?(@page.mask_news_titles[i])
-                                                     @information[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i] end}
-    # Adds trending news stories to @information
-    @page.trend_news_titles().length().times {|i| unless duplicate_title?(@page.trend_news_titles[i])
-                                                    @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] end}
-    until @page.is_lastPage?
-      # Adds general news stories to @information
-      @page.reg_news_titles().length().times {|i| unless duplicate_title?(@page.reg_news_titles[i])
-                                                    @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] end}
-      @page.goto_nextPage
+  def scrape_mask_news
+    mask_news = Hash.new
+    @page.mask_news_titles.length.times {|i| mask_news[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i]}
+    @mask_news = mask_news
+  end
+
+  def scrape_trend_news
+    trend_news = Hash.new
+    @page.trend_news_titles.length.times {|i| trend_news[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i]}
+    @trend_news = trend_news
+  end
+
+  def scrape_page_news
+    page_news = Hash.new
+    @page.reg_news_titles.length.times {|i| page_news[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i]}
+    @page_news = page_news
+  end
+
+  def get_link
+
+  end
+
+  # display the news, search format (1)
+  # @param choice is Integer
+  #
+  def list_news choice
+    case choice
+    when 1
+      @mask_news.each_key { |key| puts key  }
+    when 2
+      @trend_news.each_key { |key| puts key  }
+    when 3
+      @page_news.each_key { |key| puts key  }
     end
-  end
-
-  # Edited by Madison Graziani on 6/19/2021
-  #   -Added the original version of code
-  # Updates @information if there are new mask articles
-  def update_mask_news
-    news_array = @page.mask_news_titles
-    news_links = @page.mask_news_links
-    news_array.length().times {|i| unless duplicate_title?(news_array[i])
-                                     @information[news_array[i].to_sym] = news_links[i] end}
-  end
-
-  # Edited by Madison Graziani on 6/19/2021
-  #   -Added the original version of code
-  # Checks if an article title already exists in @information
-  def duplicate_title?(title)
-    @information.has_key? title
   end
 
   # Edited by Madison Graziani on 6/18/2021
   #   -Added parameter and edited code
   # Updates @newsPage to hold the hyperlink of the given link parameter
-  def connect_page(link)
+  def connect_page link
     @news_page = @agent.get link
   end
 
@@ -66,7 +80,7 @@ class Scraper
   # Scrapes the contents of the news page and returns it as text
   def scrape_content
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    @news_page.xpath('//section/p').text
+    @news_page.xpath('//p/span[@style="font-weight: 400;"]').text
   end
 
   # Edited by Madison Graziani on 6/18/2021
@@ -87,10 +101,6 @@ class Scraper
     @news_page.xpath('//li[@class="post-author"]/a').text
   end
 
-  # display the news, search format (1)
-  def list_news year, month, time = nil
-
-  end
 
   #
   # (1)there are three way user could choice, use Date: Year, Month, *Day (optional), display a list of news, ask which news they to see(integer), go page, scrape page content down, display to use
@@ -149,20 +159,46 @@ class Scraper
 
 end
 
-
-#Test
-#page = Page.new
-#scraper = Scraper.new
-#scraper.scrape_all
-#page.goto_nextPage
-#page.goto_lastPage
-#puts page.has_previousPage?
-#puts page.has_nextPage?
-#page.goto_lastPage
-#puts page.is_lastPage?
-#puts page.mask_news_links
-#r = scraper.create_regexp ['abc', 'def']
-#puts r.match?('ab def')
+scraper = Scraper.new
+scraper.scrape_page_news
+scraper.list_news 3
 
 
 
+=begin
+# Edited by Madison Graziani on 6/19/2021
+#   -Added the original version of code
+# Updates @information if there are new mask articles
+def update_mask_news
+  news_array = @page.mask_news_titles
+  news_links = @page.mask_news_links
+  news_array.length().times {|i| unless duplicate_title?(news_array[i])
+                                   @information[news_array[i].to_sym] = news_links[i] end}
+end
+
+# Edited by Madison Graziani on 6/19/2021
+#   -Added the original version of code
+# Checks if an article title already exists in @information
+def duplicate_title?(title)
+  @information.has_key? title
+end
+
+# Edited by Madison Graziani on 6/19/2021
+#   -Added the original version of code
+#   -Changed code to loop and get all pages
+# Fills @information with article titles and links while making sure to check for duplicates
+def scrape_all
+  # Adds header news stories to @information
+  @page.mask_news_titles().length().times {|i| unless duplicate_title?(@page.mask_news_titles[i])
+                                                 @information[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i] end}
+  # Adds trending news stories to @information
+  @page.trend_news_titles().length().times {|i| unless duplicate_title?(@page.trend_news_titles[i])
+                                                  @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] end}
+  until @page.is_lastPage?
+    # Adds general news stories to @information
+    @page.reg_news_titles().length().times {|i| unless duplicate_title?(@page.reg_news_titles[i])
+                                                  @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] end}
+    @page.goto_nextPage
+  end
+end
+=end
