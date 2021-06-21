@@ -86,8 +86,8 @@ class Page
   # Set:
   #   @current_page to the page number provide by the user
   # Page navigate to the page whose number is provide as a integer
-  def goto_particular_page page_number
-    @current_page = agent.get @@URL.concat "/","page","/",page_number.to_s,"/"
+  def goto_particular_page page_num
+    @current_page = agent.get @@URL.concat "/","page","/",page_num.to_s,"/"
   end
 
   # Created (Hongda Lin, 6/16)
@@ -112,6 +112,8 @@ class Page
 
   # Created 6/20/21 by Samuel Gernstetter
   # Edit: fix bugs (Hongda 6/21/21 )
+  #
+  # @param page_num (class Integer)
   #
   # @return (class TrueClass)
   #   true if a page with the given number exists, false otherwise
