@@ -35,6 +35,9 @@ class Scraper
   # Edited by Madison Graziani on 6/20/2021
   #   -Changed parameter name and simplified code
   # Fills @mask_news with article titles and links
+  #
+  #Set:
+  #   @mask_news to the current page mask news hash, @mask_news.length == 2
   def scrape_mask_news
     # Resets hash to take info from new page
     @mask_news = @page.mask_news
@@ -50,6 +53,9 @@ class Scraper
   # Edited by Madison Graziani on 6/20/2021
   #   -Changed parameter name and simplified code
   # Fills @trend_news with article titles and links
+  #
+  #Set:
+  #   @trend_news to the current page trend news hash, @trend_news.length == 3
   def scrape_trend_news
     # Resets hash to take info from new page
     @trend_news = @page.trend_news
@@ -65,6 +71,9 @@ class Scraper
   # Edited by Madison Graziani on 6/20/2021
   #   -Changed parameter name and simplified code
   # Fills @reg_news with article titles and links
+  #
+  #Set:
+  #   @reg_news to the current page reg news hash , @reg_news.length == 12 except the last page
   def scrape_reg_news
     # Resets hash to take info from new page
     @reg_news = @page.reg_news
@@ -74,11 +83,16 @@ class Scraper
 
   #Edited by Madison Graziani on 6/20/2021
   #   -Added original version of code
+  # Edited by Hongda Lin on 6/20/2021
+  #   -fix bug, hash key should be symbol
   # This method searches the specified hash for the correct link to a specified news article
-  # @param choice
+  #
+  # @param choice (class Integer)
   #       An integer specifying the type of news
-  # @param title
+  # @param title (class String)
   #       A string that is the title of a news story
+  # @return (class String)
+  #       the link corresponding to the title
   def get_link choice, title
     case choice
     when 1
@@ -91,12 +105,14 @@ class Scraper
   end
 
   # Created by Hongda Lin on 6/20/2021
-  # @param choice1
+  #
+  # @param choice1 (class Integer)
   #       choice1 is the integer user enter in the first menu for select what kind of news
-  # @param choice2
+  # @param choice2 (class Integer)
   #       choice2 is the integer in second menu for what news they want to look.
   #
-  # @return a specific news title, will be used in get_link
+  # @return (class String)
+  #   a specific news title, will be used in get_link
   def get_title choice1, choice2
     case choice1
     when 1
@@ -111,7 +127,8 @@ class Scraper
   #Edited by Hongda Lin on 6/20/2021
   #   -Added original version of code
   # This method prints the specified hash of news titles
-  # @param choice
+  #
+  # @param choice (class Integer)
   #       An integer specifying the type of news
   def list_news choice
     case choice
@@ -127,6 +144,9 @@ class Scraper
   # Edited by Madison Graziani on 6/18/2021
   #   -Added parameter and edited code
   # Updates @news_page to hold the hyperlink of the given link parameter
+  #
+  # @param (class String)
+  #   the link to the news
   def connect_page link
     @news_page = @agent.get link
   end
@@ -135,9 +155,12 @@ class Scraper
   #   -Added the original version of code
   # Edited 6/19/21 by Samuel Gernstetter
   # Scrapes the contents of the news page and returns it as text
+  #
+  # @return (class Array) #TODO need to decide the return type
+  #   current page news content
   def scrape_content
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    contents = @news_page.xpath('//section/p').to_a
+    @news_page.xpath('//section/p').to_a
     #Debug print
     #contents.each { |content| puts content.text }
   end
@@ -146,6 +169,9 @@ class Scraper
   #   -Added the original version of code
   # Edited 6/19/21 by Samuel Gernstetter
   # Scrapes the date the article was published and returns it as text
+  #
+  # @return (class String)
+  #   current page news date
   def scrape_date
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
     @news_page.xpath('//li[@class="post-date"]').text
@@ -155,6 +181,9 @@ class Scraper
   #   -Added the original version of code
   # Edited 6/19/21 by Samuel Gernstetter
   # Scrapes the name of the article's author and returns it as text
+  #
+  # @return (class String)
+  #  current page news author
   def scrape_author
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
     @news_page.xpath('//li[@class="post-author"]/a').text
@@ -227,11 +256,12 @@ class Scraper
 
 end
 
+=begin
 scraper = Scraper.new
 scraper.scrape_reg_news
 title =  scraper.get_title 3, 1 #3 means reg_news. 1-1 means first article because of hash
 link = scraper.get_link 3, title
 scraper.connect_page link
 scraper.scrape_content
-
+=end
 
