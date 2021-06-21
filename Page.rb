@@ -105,7 +105,7 @@ class Page
   # @return
   #   true if a page with the given number exists, false otherwise
   def has_particular_page? page_num
-    page_num > 0 && page_num <= last_page_num
+    (page_num >= 1) && (page_num <= last_page_num)
   end
 
   # Created (Hongda Lin, 6/17)
