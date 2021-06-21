@@ -81,7 +81,6 @@ class Page
     @current_page = agent.get @@URL.concat "/","page","/",page_number.to_s,"/"
   end
 
-  # TODO merge these two?
   # Created (Hongda Lin, 6/16)
   # update: change method name to has_next_page?, cannot trim because it checks nil (Hongda 6/19)
   # Edited 6/19/21 by Samuel Gernstetter
@@ -100,6 +99,13 @@ class Page
   #   true if there is a next page, false otherwise
   def has_previous_page?
      @agent.page.links.find{|link| link.text == "« Prev"} != nil
+  end
+
+  # Created 6/20/21 by Samuel Gernstetter
+  # @return
+  #   true if a page with the given number exists, false otherwise
+  def has_particular_page? page_num
+    page_num > 0 && page_num <= last_page_num
   end
 
   # Created (Hongda Lin, 6/17)
