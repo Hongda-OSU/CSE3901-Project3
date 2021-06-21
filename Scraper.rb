@@ -226,8 +226,8 @@ end
 #   -Added the original version of code
 # Updates @information if there are new mask articles
 def update_mask_news
-  news_array = @page.mask_news_titles
-  news_links = @page.mask_news_links
+  news_array = @page.mask_news.keys
+  news_links = @page.mask_news.values
   news_array.length.times {|i| unless duplicate_title?(news_array[i])
                                    @information[news_array[i].to_sym] = news_links[i] end}
 end
