@@ -20,7 +20,7 @@ class Scraper
     @mask_news = nil
     #Store the current page trend news titles and links as a hash, num 3
     @trend_news = nil
-    #Store the current page news titles and links as a hash, num 12
+    #Store the current page reg news titles and links as a hash, num 12
     @reg_news = nil
     @agent = Mechanize.new
     #Webpage of one article
@@ -126,7 +126,7 @@ class Scraper
 
   # Edited by Madison Graziani on 6/18/2021
   #   -Added parameter and edited code
-  # Updates @newsPage to hold the hyperlink of the given link parameter
+  # Updates @news_page to hold the hyperlink of the given link parameter
   def connect_page link
     @news_page = @agent.get link
   end
