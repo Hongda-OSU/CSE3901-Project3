@@ -253,7 +253,7 @@ class Page
   # Created (Hongda Lin, 6/17)
   # Return the current page news title, for checking page navigation
   def info
-    self.reg_news_titles
+    self.reg_news.keys
   end
 end
 

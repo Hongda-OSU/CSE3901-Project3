@@ -38,7 +38,7 @@ class Scraper
   def scrape_mask_news
     # Resets hash to take info from new page
     @mask_news = Hash.new
-    @page.mask_news_titles.length.times {|index| @mask_news[@page.mask_news_titles[index].to_sym] = @page.mask_news_links[index]}
+    @page.mask_news.keys.length.times {|index| @mask_news[@page.mask_news.keys[index].to_sym] = @page.mask_news.values[index]}
   end
 
   # Edited by Madison Graziani on 6/19/2021
@@ -52,7 +52,7 @@ class Scraper
   def scrape_trend_news
     # Resets hash to take info from new page
     @trend_news = Hash.new
-    @page.trend_news_titles.length.times {|index| @trend_news[@page.trend_news_titles[index].to_sym] = @page.trend_news_links[index]}
+    @page.trend_news.keys.length.times {|index| @trend_news[@page.trend_news.keys[index].to_sym] = @page.trend_news.values[index]}
   end
 
   # Edited by Madison Graziani on 6/19/2021
@@ -66,7 +66,7 @@ class Scraper
   def scrape_page_news
     # Resets hash to take info from new page
     @page_news = Hash.new
-    @page.reg_news_titles.length.times {|index| @page_news[@page.reg_news_titles[index].to_sym] = @page.reg_news_links[index]}
+    @page.reg_news.keys.length.times {|index| @page_news[@page.reg_news.keys[index].to_sym] = @page.reg_news.values[index]}
   end
 
   #Edited by Madison Graziani on 6/20/2021
