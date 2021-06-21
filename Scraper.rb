@@ -228,7 +228,7 @@ end
 def update_mask_news
   news_array = @page.mask_news_titles
   news_links = @page.mask_news_links
-  news_array.length().times {|i| unless duplicate_title?(news_array[i])
+  news_array.length.times {|i| unless duplicate_title?(news_array[i])
                                    @information[news_array[i].to_sym] = news_links[i] end}
 end
 
@@ -245,15 +245,15 @@ end
 # Fills @information with article titles and links while making sure to check for duplicates
 def scrape_all
   # Adds header news stories to @information
-  @page.mask_news_titles().length().times {|i| unless duplicate_title?(@page.mask_news_titles[i])
-                                                 @information[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i] end}
+  @page.mask_news.keys.length.times {|i| unless duplicate_title?(@page.mask_news.keys[i])
+                                                 @information[@page.mask_news.keys[i].to_sym] = @page.mask_news.values[i] end}
   # Adds trending news stories to @information
-  @page.trend_news_titles().length().times {|i| unless duplicate_title?(@page.trend_news_titles[i])
-                                                  @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] end}
+  @page.trend_news.keys.length.times {|i| unless duplicate_title?(@page.trend_news.keys[i])
+                                                  @information[@page.trend_news.keys[i].to_sym] = @page.trend_news.values[i] end}
   until @page.is_lastPage?
     # Adds general news stories to @information
-    @page.reg_news_titles().length().times {|i| unless duplicate_title?(@page.reg_news_titles[i])
-                                                  @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] end}
+    @page.reg_news.keys.length.times {|i| unless duplicate_title?(@page.reg_news.keys[i])
+                                                  @information[@page.reg_news.keys[i].to_sym] = @page.reg_news.values[i] end}
     @page.goto_nextPage
   end
 end
