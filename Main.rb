@@ -11,6 +11,5 @@ loop do
   scraper.page.goto_particular_page view.page_prompt scraper.page.last_page_num if option == 'page'
 end
 =end
-puts scraper.page.trend_news_titles
-puts scraper.page.trend_news_links
-puts scraper.page.trend_news
+puts scraper.page.trend_news.keys
+puts scraper.page.trend_news.values

@@ -13,7 +13,7 @@ require_relative 'Page'
 #   be update to news in that new page. User could choose to see mask news, trend news or page news by enter number (View), the titles
 #   will be displayed and user could choose an article by number to see the content.
 class Scraper
-  attr_reader :page, :mask_news, :trend_news, :page_news, :news_page
+  attr_reader :page, :mask_news, :trend_news, :reg_news, :news_page
   def initialize
     @page = Page.new
     #Store the current page mask news titles and links as a hash, num 2
@@ -21,7 +21,7 @@ class Scraper
     #Store the current page trend news titles and links as a hash, num 3
     @trend_news = nil
     #Store the current page news titles and links as a hash, num 12
-    @page_news = nil
+    @reg_news = nil
     @agent = Mechanize.new
     #Webpage of one article
     @news_page = nil
@@ -37,8 +37,9 @@ class Scraper
   # Fills @mask_news with article titles and links
   def scrape_mask_news
     # Resets hash to take info from new page
-    @mask_news = Hash.new
-    @page.mask_news_titles.length.times {|index| @mask_news[@page.mask_news_titles[index].to_sym] = @page.mask_news_links[index]}
+    @mask_news = @page.mask_news
+    #@mask_news = Hash.new
+    #@page.mask_news.keys.length.times {|index| @mask_news[@page.mask_news.keys[index].to_sym] = @page.mask_news.values[index]}
   end
 
   # Edited by Madison Graziani on 6/19/2021
@@ -51,8 +52,9 @@ class Scraper
   # Fills @trend_news with article titles and links
   def scrape_trend_news
     # Resets hash to take info from new page
-    @trend_news = Hash.new
-    @page.trend_news_titles.length.times {|index| @trend_news[@page.trend_news_titles[index].to_sym] = @page.trend_news_links[index]}
+    @trend_news = @page.trend_news
+    #@trend_news = Hash.new
+    #@page.trend_news.keys.length.times {|index| @trend_news[@page.trend_news.keys[index].to_sym] = @page.trend_news.values[index]}
   end
 
   # Edited by Madison Graziani on 6/19/2021
@@ -62,11 +64,12 @@ class Scraper
   #   -Reverted code to one page with no duplicate check
   # Edited by Madison Graziani on 6/20/2021
   #   -Changed parameter name and simplified code
-  # Fills @page_news with article titles and links
-  def scrape_page_news
+  # Fills @reg_news with article titles and links
+  def scrape_reg_news
     # Resets hash to take info from new page
-    @page_news = Hash.new
-    @page.reg_news_titles.length.times {|index| @page_news[@page.reg_news_titles[index].to_sym] = @page.reg_news_links[index]}
+    @reg_news = @page.reg_news
+    #@reg_news = Hash.new
+    #@reg.reg_news.keys.length.times {|index| @reg_news[@page.reg_news.keys[index].to_sym] = @page.reg_news.values[index]}
   end
 
   #Edited by Madison Graziani on 6/20/2021
@@ -83,7 +86,7 @@ class Scraper
     when 2
       @trend_news[title]
     when 3
-      @page_news[title]
+      @reg_news[title]
     end
   end
 
@@ -101,7 +104,7 @@ class Scraper
     when 2
       @trend_news.key choice2
     when 3
-      @page_news.key choice2
+      @reg_news.key choice2
     end
   end
 
@@ -117,7 +120,7 @@ class Scraper
     when 2
       @trend_news.each_key { |key| puts key  }
     when 3
-      @page_news.each_key { |key| puts key  }
+      @reg_news.each_key { |key| puts key  }
     end
   end
 
@@ -214,9 +217,9 @@ class Scraper
 end
 
 #scraper = Scraper.new
-#scraper.scrape_page_news
+#scraper.scrape_reg_news
 #symbol = "Ohio State research review suggests strong connection between narcissism and aggression".to_sym
-#link = scraper.page_news[symbol]
+#link = scraper.reg_news[symbol]
 #puts link
 
 
@@ -226,9 +229,9 @@ end
 #   -Added the original version of code
 # Updates @information if there are new mask articles
 def update_mask_news
-  news_array = @page.mask_news_titles
-  news_links = @page.mask_news_links
-  news_array.length().times {|i| unless duplicate_title?(news_array[i])
+  news_array = @page.mask_news.keys
+  news_links = @page.mask_news.values
+  news_array.length.times {|i| unless duplicate_title?(news_array[i])
                                    @information[news_array[i].to_sym] = news_links[i] end}
 end
 
@@ -245,15 +248,15 @@ end
 # Fills @information with article titles and links while making sure to check for duplicates
 def scrape_all
   # Adds header news stories to @information
-  @page.mask_news_titles().length().times {|i| unless duplicate_title?(@page.mask_news_titles[i])
-                                                 @information[@page.mask_news_titles[i].to_sym] = @page.mask_news_links[i] end}
+  @page.mask_news.keys.length.times {|i| unless duplicate_title?(@page.mask_news.keys[i])
+                                                 @information[@page.mask_news.keys[i].to_sym] = @page.mask_news.values[i] end}
   # Adds trending news stories to @information
-  @page.trend_news_titles().length().times {|i| unless duplicate_title?(@page.trend_news_titles[i])
-                                                  @information[@page.trend_news_titles[i].to_sym] = @page.trend_news_links[i] end}
+  @page.trend_news.keys.length.times {|i| unless duplicate_title?(@page.trend_news.keys[i])
+                                                  @information[@page.trend_news.keys[i].to_sym] = @page.trend_news.values[i] end}
   until @page.is_lastPage?
     # Adds general news stories to @information
-    @page.reg_news_titles().length().times {|i| unless duplicate_title?(@page.reg_news_titles[i])
-                                                  @information[@page.reg_news_titles[i].to_sym] = @page.reg_news_links[i] end}
+    @page.reg_news.keys.length.times {|i| unless duplicate_title?(@page.reg_news.keys[i])
+                                                  @information[@page.reg_news.keys[i].to_sym] = @page.reg_news.values[i] end}
     @page.goto_nextPage
   end
 end
