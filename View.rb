@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 # TODO might not need to be a class - module?
+# TODO add variable definitions
 # Created 6/17/21 by Samuel Gernstetter
 # Methods to input and output data
 class View
-  # TODO add variable definitions
+  # TODO make split up versions of article_list for the three news types
   # Created 6/17/21 by Samuel Gernstetter
   # Edited 6/19/21 by Samuel Gernstetter
   #   merge article_list and search_results
@@ -47,8 +48,14 @@ class View
 
   # Created 6/17/21 by Samuel Gernstetter
   # alert the user that they attempted to access a nonexistent page
-  def page_error_message
+  def input_error_message
     puts 'WARNING: Attempted to access nonexistent page.'
+  end
+
+  # Created 6/20/21 by Samuel Gernstetter
+  # alert the user that they entered an invalid input
+  def page_error_message
+    puts 'WARNING: Invalid input.'
   end
 
   # Created 6/17/21 by Samuel Gernstetter
