@@ -117,29 +117,6 @@ class Page
   end
 
   # Created (Hongda Lin, 6/17)
-  # trending news are the three news display on the middle, only need to scrape once, but need to keep update
-  #
-  # @return
-  #   the title of trending news in an Array, each title is represented as a string
-  def trend_news_titles
-    titles = @current_page.xpath('//h2[@class="post-title"]/a')
-    arr_titles = Array.new
-    titles.each_with_index {|title,index| arr_titles<<title.text if index < 3}
-    arr_titles
-  end
-
-  # Created (Hongda Lin, 6/17)
-  # trending news are the three news display on the middle, only need to scrape once, but need to keep update
-  # @return
-  #   the links of trending news in an Array, each link is represented as a string
-  def trend_news_links
-    links = @current_page.xpath('//h2[@class="post-title"]/a/@href')
-    arr_links = Array.new
-    links.each_with_index {|link,index| arr_links<<link.text if index < 3}
-    arr_links
-  end
-
-  # Created (Hongda Lin, 6/17)
   # Edited 6/20/21 by Samuel Gernstetter
   #   merge mask_news_titles and mask_news_links into mask_news, use a hash
   # mask news are the news display on the top, only need to scrape once, but need to keep update
@@ -154,28 +131,6 @@ class Page
   end
 
   # Created (Hongda Lin, 6/17)
-  # mask news are the news display on the top, only need to scrape once, but need to keep update
-  # @return
-  #   the title of mask news in an Array, each title is represented as a string
-  def mask_news_titles
-    titles = @current_page.xpath('//a[@class="mask-title"]')
-    arr_titles = Array.new
-    titles.each {|title| arr_titles<<title.text}
-    arr_titles
-  end
-
-  # Created (Hongda Lin, 6/17)
-  # mask news are the news display on the top, only need to scrape once, but need to keep update
-  # @return
-  #    the links of mask news in an Array, each link is represented as a string
-  def mask_news_links
-    links = @current_page.xpath('//a[@class="mask-title"]/@href')
-    arr_links = Array.new
-    links.each {|link| arr_links<<link.text}
-    arr_links
-  end
-
-  # Created (Hongda Lin, 6/17)
   # Edited 6/20/21 by Samuel Gernstetter
   #   merge reg_news_titles and reg_news_links into reg_news, use a hash
   # reg news is the grid at the bottom, only need to scrape once, but need to keep update
@@ -187,35 +142,6 @@ class Page
     links = @current_page.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a/@href')
     titles.each_with_index { |title, index| reg[title.text] = links[index].text}
     reg
-  end
-
-  # Created (Hongda Lin, 6/16)
-  #
-  # titles has class:  Nokogiri::XML::NodeSet
-  # each title inside titles has class: Nokogiri::XML::Element
-  #
-  # @return
-  #   the titles of news of current page in an Array, each title is represented as a string, not include the trend news and head news
-  def reg_news_titles
-    titles = @current_page.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a')
-    arr_titles = Array.new
-    titles.each{|title| arr_titles<<title.text}
-    arr_titles
-  end
-
-  # Created (Hongda Lin, 6/16)
-  #
-  # links has class:  Nokogiri::XML::NodeSet
-  # each link inside links has class: Nokogiri::XML::Attr
-  #
-  # @return
-  #   the links of news of current page in an Array, each link is represented as a string, not include the trend news and head news
-  #
-  def reg_news_links
-    links = @current_page.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a/@href')
-    arr_links = Array.new
-    links.each{|link| arr_links << link.text}
-    arr_links
   end
 
   # Created (Hongda Lin, 6/17)
