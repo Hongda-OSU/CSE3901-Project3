@@ -82,11 +82,11 @@ class Scraper
   def get_link choice, title
     case choice
     when 1
-      @mask_news[title]
+      @mask_news[title.to_sym]
     when 2
-      @trend_news[title]
+      @trend_news[title.to_sym]
     when 3
-      @reg_news[title]
+      @reg_news[title.to_sym]
     end
   end
 
@@ -100,11 +100,11 @@ class Scraper
   def get_title choice1, choice2
     case choice1
     when 1
-      @mask_news.key choice2
+      @mask_news.keys[choice2].to_s
     when 2
-      @trend_news.key choice2
+      @trend_news.keys[choice2].to_s
     when 3
-      @reg_news.key choice2
+      @reg_news.keys[choice2].to_s
     end
   end
 
@@ -137,7 +137,8 @@ class Scraper
   # Scrapes the contents of the news page and returns it as text
   def scrape_content
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    @news_page.xpath('//p/span[@style="font-weight: 400;"]').text
+    contents = @news_page.xpath('//section/p').to_a
+    contents.each { |content| puts content.text }
   end
 
   # Edited by Madison Graziani on 6/18/2021
@@ -216,48 +217,11 @@ class Scraper
 
 end
 
-#scraper = Scraper.new
-#scraper.scrape_reg_news
-#symbol = "Ohio State research review suggests strong connection between narcissism and aggression".to_sym
-#link = scraper.reg_news[symbol]
-#puts link
+scraper = Scraper.new
+scraper.scrape_reg_news
+title =  scraper.get_title 3, 1 #3 means reg_news. 1-1 means first article because of hash
+link = scraper.get_link 3, title
+scraper.connect_page link
+scraper.scrape_content
 
 
-
-=begin
-# Edited by Madison Graziani on 6/19/2021
-#   -Added the original version of code
-# Updates @information if there are new mask articles
-def update_mask_news
-  news_array = @page.mask_news.keys
-  news_links = @page.mask_news.values
-  news_array.length.times {|i| unless duplicate_title?(news_array[i])
-                                   @information[news_array[i].to_sym] = news_links[i] end}
-end
-
-# Edited by Madison Graziani on 6/19/2021
-#   -Added the original version of code
-# Checks if an article title already exists in @information
-def duplicate_title?(title)
-  @information.has_key? title
-end
-
-# Edited by Madison Graziani on 6/19/2021
-#   -Added the original version of code
-#   -Changed code to loop and get all pages
-# Fills @information with article titles and links while making sure to check for duplicates
-def scrape_all
-  # Adds header news stories to @information
-  @page.mask_news.keys.length.times {|i| unless duplicate_title?(@page.mask_news.keys[i])
-                                                 @information[@page.mask_news.keys[i].to_sym] = @page.mask_news.values[i] end}
-  # Adds trending news stories to @information
-  @page.trend_news.keys.length.times {|i| unless duplicate_title?(@page.trend_news.keys[i])
-                                                  @information[@page.trend_news.keys[i].to_sym] = @page.trend_news.values[i] end}
-  until @page.is_lastPage?
-    # Adds general news stories to @information
-    @page.reg_news.keys.length.times {|i| unless duplicate_title?(@page.reg_news.keys[i])
-                                                  @information[@page.reg_news.keys[i].to_sym] = @page.reg_news.values[i] end}
-    @page.goto_nextPage
-  end
-end
-=end

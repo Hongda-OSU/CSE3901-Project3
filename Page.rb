@@ -118,7 +118,7 @@ class Page
     trend = Hash.new
     titles = @current_page.xpath('//h2[@class="post-title"]/a')
     links = @current_page.xpath('//h2[@class="post-title"]/a/@href')
-    titles.each_with_index { |title, index| trend[title.text] = links[index].text if index < 3}
+    titles.each_with_index { |title, index| trend[title.text.to_sym] = links[index].text if index < 3}
     trend
   end
 
@@ -132,7 +132,7 @@ class Page
     mask = Hash.new
     titles = @current_page.xpath('//a[@class="mask-title"]')
     links = @current_page.xpath('//a[@class="mask-title"]/@href')
-    titles.each_with_index { |title, index| mask[title.text] = links[index].text}
+    titles.each_with_index { |title, index| mask[title.text.to_sym] = links[index].text}
     mask
   end
 
@@ -146,7 +146,7 @@ class Page
     reg = Hash.new
     titles = @current_page.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a')
     links = @current_page.xpath('//article[@class="post-summary post-format-standard clearfix"]//h2[@class="post-title"]/a/@href')
-    titles.each_with_index { |title, index| reg[title.text] = links[index].text}
+    titles.each_with_index { |title, index| reg[title.text.to_sym] = links[index].text}
     reg
   end
 
@@ -189,6 +189,3 @@ class Page
   end
 end
 
-#page = Page.new
-#puts page.is_first_page?
-#puts page.info
