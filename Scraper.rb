@@ -138,7 +138,8 @@ class Scraper
   def scrape_content
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
     contents = @news_page.xpath('//section/p').to_a
-    contents.each { |content| puts content.text }
+    #Debug print
+    #contents.each { |content| puts content.text }
   end
 
   # Edited by Madison Graziani on 6/18/2021
@@ -172,16 +173,23 @@ class Scraper
   def keyword_search *terms
     matches = Array.new
     regx = create_regexp terms
+    information = page.mask_news.merge page.trend_news
+    pages = 0
 
-    # Search titles for key words
-    @information.each_key{|title| matches.push(title) if regx.match(title)}
+    until matches.length == 10 || pages == 5 || !page.has_next_page?
+      pages += 1
+      page.goto_page("Next »")
+      information.merge page.reg_news
 
-    #search unmatched articles text for key words
-    remaining = @information.reject{|key| matches.include?(key.to_s)}
-    remaining.each_value{|link| matches.push(remaining.key(link)) if search_news_text(link, regx)}
+      # Search titles for key words
+      information.each_key{|title| matches.push(title.to_s) if regx.match(title.to_s)}
 
+      #search unmatched articles text for key words
+      remaining = information.reject{|key| matches.include?(key.to_s)}
+      remaining.each_value{|link| matches.push(remaining.key(link)) if search_news_text(link, regx)}
+    end
     #return hash of matched articles
-    @information.select{|key| matches.include?(key.to_s)}
+    information.select{|key| matches.include?(key.to_s)}
   end
 
   # Created by Drew Jackson 6/17/2021
@@ -197,7 +205,9 @@ class Scraper
     content = scrape_content
     # RegExp to search content for keywords
     # TODO match to format of content_scrape return
-    regx.match?(content)
+
+    # Edit changed each to any?, short circuits search
+    content.any?{|text| regx.match?(text)}
   end
 
   # Created by Drew Jackson 6/18/21
