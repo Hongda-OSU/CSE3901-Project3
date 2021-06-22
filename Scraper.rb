@@ -208,6 +208,7 @@ class Scraper
     information = page.mask_news.merge page.trend_news
     pages = 0
 
+    # Length and page limit because of large data set to search through
     until matches.length == 10 || pages == 5 || !page.has_next_page?
       pages += 1
       page.goto_page("Next »")
@@ -220,11 +221,14 @@ class Scraper
       remaining = information.reject{|key| matches.include?(key.to_s)}
       remaining.each_value{|link| matches.push(remaining.key(link)) if search_news_text(link, regx)}
     end
+
     #return hash of matched articles
     information.select{|key| matches.include?(key.to_s)}
   end
 
   # Created by Drew Jackson 6/17/2021
+  # Edit by Drew Jackson 6/22/2021
+  #   Change from scrape_content to scrape_body
   # Edited 6/22/21 by Samuel Gernstetter
   #   adjust to work with scrape_body
   # Scans an article for keywords, returns true if matched
@@ -236,6 +240,15 @@ class Scraper
   #   A boolean value, true if matches to regx are found, false if not
   def search_news_text link, regx
     connect_page link
+    #content = scrape_body
+    # RegExp to search content for keywords
+    # TODO match to format of content_scrape return
+    # Edit changed each to any?, short circuits search
+    # Edit content changed to string, cannot use any?
+    #content.any?{|text| regx.match?(text)}
+    #regx.match? content
+    #body = scrape_body
+    #body.match? regxb
     scrape_body.match? regx
   end
 

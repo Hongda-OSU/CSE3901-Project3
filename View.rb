@@ -85,4 +85,30 @@ class View
     print "\nEnter search term: "
     gets.chomp!
   end
+
+  #Created by Drew Jackson on 6/22/2021
+  # Prints menu after returning search results
+  def search_result_menu
+    puts "\nEnter article number to print article text or click on link to go to that page,"
+    puts "enter 'next' to search for more results, enter 'search' to perform a new search,"
+    puts "or enter 'exit' to return to article menu: "
+  end
+
+  #Created by Drew Jackson on 6/22/2021
+  # Prints menu if no search results found.
+  def no_search_results
+    puts "\nNo results found in this search. If you would like to search further back through"
+    puts "articles enter 'continue', or enter 'exit' to return to article menu: "
+  end
+
+
+  # Created 6/22/21 by Drew Jackson
+  # prompt the user with a main menu on start up
+  def main_menu_prompt
+    puts "\nWelcome! Please continue to be connected with news articles from The Lantern"
+    puts "Enter 'continue' to view a list of articles, enter 'page' to go to a"
+    puts "specific page, enter 'search' to search articles, or enter 'quit' to exit the"
+    print "program: "
+    gets.chomp!
+  end
 end
