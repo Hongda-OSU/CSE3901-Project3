@@ -5,15 +5,20 @@ require_relative 'View'
 
 scraper = Scraper.new
 view = View.new
+
 #TODO start with main menu of option before printing article list
+option = view.main_menu_prompt.downcase
+
 loop do
-  #TODO maybe start loop with gets and pass to option before printing list
-  # TODO make another implementation that uses the separate view methods with corresponding altered logic (comment out old)
-  page_num = scraper.page.current_page_num
-  #TODO move mask/trend scrape out of loop to stop duplicate posts
-  articles = scraper.page.mask_news.merge scraper.page.trend_news, scraper.page.reg_news
-  view.article_list articles.keys, page_num
-  option = view.menu_prompt.downcase
+  if option == 'continue'
+    #TODO maybe start loop with gets and pass to option before printing list
+    # TODO make another implementation that uses the separate view methods with corresponding altered logic (comment out old)
+    page_num = scraper.page.current_page_num
+    #TODO move mask/trend scrape out of loop to stop duplicate posts
+    articles = scraper.page.mask_news.merge scraper.page.trend_news, scraper.page.reg_news
+    view.article_list articles.keys, page_num
+    option = view.menu_prompt.downcase
+  end
   case option
   # TODO get digit input from user, verify that it is a digit and a valid article digit, handle either way
   when 'next'
@@ -56,4 +61,5 @@ loop do
       view.input_error_message
     end
   end
+  option = view.menu_prompt.downcase
 end
