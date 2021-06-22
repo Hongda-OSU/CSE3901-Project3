@@ -87,7 +87,8 @@ class Page
   #   @current_page to the page number provide by the user
   # Page navigate to the page whose number is provide as a integer
   def goto_particular_page page_num
-    @current_page = agent.get @@URL.concat "/","page","/",page_num.to_s,"/"
+    tempURL = @@URL.dup
+    @current_page = agent.get tempURL.concat "/","page","/",page_num.to_s,"/"
   end
 
   # Created (Hongda Lin, 6/16)
@@ -208,4 +209,3 @@ class Page
     self.reg_news.keys
   end
 end
-
