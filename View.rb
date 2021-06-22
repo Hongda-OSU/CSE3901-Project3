@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO might not need to be a class - module?
 # TODO add variable definitions
 # Created 6/17/21 by Samuel Gernstetter
 # Methods to input and output data
@@ -69,11 +68,13 @@ class View
   end
 
   # Created 6/17/21 by Samuel Gernstetter
+  # Edited 6/22/21 by Samuel Gernstetter
+  #   formatting and finishing fixes
   # print an article and prompt the user to exit
   def print_article(headline, date, author, body)
     puts "\n#{headline}\n#{date}\n#{author}\n\n#{body}"
     print "\nEnter any input when finished reading to return to the list. "
-    gets.chomp!
+    gets
   end
 
   # Created 6/17/21 by Drew Jackson
