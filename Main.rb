@@ -25,7 +25,7 @@ loop do
     page_num = view.page_prompt scraper.page.last_page_num
     #Debug print
     puts page_num.class
-    scraper.page.has_particular_page? page_num ? scraper.page.goto_particular_page(page_num) : view.page_error_message
+    scraper.page.has_particular_page?(page_num) ? scraper.page.goto_particular_page(page_num) : view.page_error_message
   when 'search'
     # Created by Drew Jackson 6/21/21
     #TODO loop on search, present results from first X pages, prompt user for next page of results or quit.
@@ -41,7 +41,6 @@ loop do
   when 'quit'
     break
   else
-    # TODO could not get a integer response to work on options, connect user to article selected in if block
     if option.to_i > 0
       #TODO connect user to selected article
     else
@@ -49,5 +48,3 @@ loop do
     end
   end
 end
-#puts scraper.page.trend_news.keys
-#puts scraper.page.trend_news.valuessea

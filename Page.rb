@@ -5,10 +5,10 @@ require 'nokogiri'
 # update: change @currentPage to @current_page (Hongda 6/19)
 class Page
   attr_reader :agent, :current_page
-  @@URL = "https://www.thelantern.com/campus/"
   def initialize
     @agent = Mechanize.new
-    @current_page = @agent.get @@URL
+    @url = "https://www.thelantern.com/campus/"
+    @current_page = @agent.get @url
   end
 
   # Created (Hongda Lin, 6/16)
@@ -17,14 +17,14 @@ class Page
   # Edited 6/19/21 by Samuel Gernstetter
   #   merge goto_next_page and goto_previous_page into goto_page
   #
-  # @param direction (class String)
+  # @param direction
   #
   # Requires:
   #   (direction == "Next »" and self.has_next_page == true) or (direction == "« Prev" and self.has_previous_page == true)
   # Set:
   #   @current_page to the next or previous page of current page
-  def goto_page direction
-    page_link = @agent.page.links.find{|link| link.text == direction}
+  def goto_page(direction)
+    page_link = @agent.page.links.find { |link| link.text == direction }
     page_link.resolved_uri
     @current_page = page_link.click
   end
@@ -60,7 +60,7 @@ class Page
   #
   # Page navigate to the first page
   def goto_first_page
-    @current_page = agent.get @@URL
+    @current_page = agent.get @url
   end
 
   # Created (Hongda Lin, 6/17)
@@ -70,42 +70,42 @@ class Page
   def goto_last_page
     # check if current page is already last page
     unless self.current_page_num == self.last_page_num
-      lastPage_page_link = @agent.page.links.find{|link| link.text == self.last_page_num}
-      lastPage_page_link.resolved_uri
-      @current_page = lastPage_page_link.click
+      last_page_page_link = @agent.page.links.find{|link| link.text == self.last_page_num}
+      last_page_page_link.resolved_uri
+      @current_page = last_page_page_link.click
     end
   end
 
   # Created (Hongda Lin, 6/17)
   # update: change method name to goto_particular_page and the new version is much quicker (Hongda 6/19)
   #
-  # @param page_number (class Integer)
+  # @param page_num
   #
   # Requires:
   #   self.has_particular_page? == true
   # Set:
   #   @current_page to the page number provide by the user
   # Page navigate to the page whose number is provide as a integer
-  def goto_particular_page page_num
-    tempURL = @@URL.dup
-    @current_page = agent.get tempURL.concat "/","page","/",page_num.to_s,"/"
+  def goto_particular_page(page_num)
+    temp_url = @url.dup
+    @current_page = agent.get temp_url.concat "/", "page", "/", page_num.to_s, "/"
   end
 
   # Created (Hongda Lin, 6/16)
   # update: change method name to has_next_page?, cannot trim because it checks nil (Hongda 6/19)
   # Edited 6/19/21 by Samuel Gernstetter
   #
-  # @return (class TrueClass)
+  # @return
   #   true if there is a next page, false otherwise
   def has_next_page?
-     @agent.page.links.find{|link| link.text == "Next »"} != nil
+    @agent.page.links.find{|link| link.text == "Next »"} != nil
   end
 
   # Created (Hongda Lin, 6/16)
   # update: change method name to has_previous_page?, cannot trim because it checks nil (Hongda 6/19)
   # Edited 6/19/21 by Samuel Gernstetter
   #
-  # @return (class TrueClass)
+  # @return
   #   true if there is a next page, false otherwise
   def has_previous_page?
      @agent.page.links.find{|link| link.text == "« Prev"} != nil
@@ -114,11 +114,11 @@ class Page
   # Created 6/20/21 by Samuel Gernstetter
   # Edit: fix bugs (Hongda 6/21/21 )
   #
-  # @param page_num (class Integer)
+  # @param page_num
   #
-  # @return (class TrueClass)
+  # @return
   #   true if a page with the given number exists, false otherwise
-  def has_particular_page? page_num
+  def has_particular_page?(page_num)
     page_num >= 1 && page_num <= self.last_page_num.to_i
   end
 
@@ -127,7 +127,7 @@ class Page
   # Edited 6/20/21 by Samuel Gernstetter
   #   merge trend_news_titles and trend_news_links into trend_news, use a hash
   #
-  # @return (class Hash)
+  # @return
   #   the titles=>links of trending news in a Hash, each title/link is represented as a string
   def trend_news
     trend = Hash.new
@@ -142,7 +142,7 @@ class Page
   #   merge mask_news_titles and mask_news_links into mask_news, use a hash
   # mask news are the news display on the top, only need to scrape once, but need to keep update
   #
-  # @return (class Hash)
+  # @return
   #   the titles=>links of mask news in a Hash, each title/link is represented as a string
   def mask_news
     mask = Hash.new
@@ -157,7 +157,7 @@ class Page
   #   merge reg_news_titles and reg_news_links into reg_news, use a hash
   # reg news is the grid at the bottom, only need to scrape once, but need to keep update
   #
-  # @return (class Hash)
+  # @return
   #   the titles=>links of reg news in a Hash, each title/link is represented as a string
   def reg_news
     reg = Hash.new
@@ -188,7 +188,7 @@ class Page
   # Created (Hongda Lin, 6/17)
   # update: change method name to is_last_page? (Hongda 6/19)
   #
-  # @return (class TrueClass)
+  # @return
   #   Return true if current page is last page, false otherwise
   def is_last_page?
     !self.has_next_page?
@@ -197,7 +197,7 @@ class Page
   # Created (Hongda Lin, 6/17)
   # update: change method name to is_first_page? (Hongda 6/19)
   #
-  # @return (class TrueClass)
+  # @return
   #   Return true if current page is first page, false otherwise
   def is_first_page?
     !self.has_previous_page?

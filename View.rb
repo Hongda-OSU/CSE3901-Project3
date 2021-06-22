@@ -9,6 +9,8 @@ class View
   # Created 6/17/21 by Samuel Gernstetter
   # Edited 6/19/21 by Samuel Gernstetter
   #   merge article_list and search_results
+  # Edited 6/22/21 by Samuel Gernstetter
+  #   make headline listing more efficient
   # print a numbered list of articles on a page
   def article_list(articles, *page_num)
     if page_num.length > 0
@@ -16,11 +18,7 @@ class View
     else
       puts 'Search Results:'
     end
-    num = 1
-    articles.each do |headline|
-      puts "#{num}) #{headline}"
-      num = num + 1
-    end
+    articles.each.with_index(1) { |headline, index| puts "#{index}) #{headline}" }
   end
 
   # Created 6/17/21 by Samuel Gernstetter
