@@ -190,7 +190,6 @@ class Scraper
   #  current page news author
   def scrape_author
     # TODO separate multiple authors with commas
-    #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
     @news_page.xpath('//li[@class="post-author"]/a').text
   end
 
