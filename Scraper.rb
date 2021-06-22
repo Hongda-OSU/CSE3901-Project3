@@ -227,6 +227,8 @@ class Scraper
   end
 
   # Created by Drew Jackson 6/17/2021
+  # Edited 6/22/21 by Samuel Gernstetter
+  #   adjust to work with scrape_body
   # Scans an article for keywords, returns true if matched
   # @param link
   #   The link to the article to be scanned
@@ -236,12 +238,8 @@ class Scraper
   #   A boolean value, true if matches to regx are found, false if not
   def search_news_text link, regx
     connect_page link
-    content = scrape_content
-    # RegExp to search content for keywords
-    # TODO match to format of content_scrape return
-
-    # Edit changed each to any?, short circuits search
-    content.any?{|text| regx.match?(text)}
+    body = scrape_body
+    body.match? regx
   end
 
   # Created by Drew Jackson 6/18/21

@@ -5,6 +5,7 @@ require_relative 'View'
 
 scraper = Scraper.new
 view = View.new
+
 #TODO start with main menu of option before printing article list
 loop do
   #TODO maybe start loop with gets and pass to option before printing list
