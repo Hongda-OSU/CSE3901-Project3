@@ -15,11 +15,11 @@ class View
   def article_list(articles, page_num)
     puts "Page #{page_num[0]}"
     puts "Top News:"
-    (1..2).each { |index| puts "#{index}) #{articles[index]}" }
+    (0..1).each { |index| puts "#{index + 1}) #{articles[index]}" }
     puts "\nTrending News:"
-    (3..5).each { |index| puts "#{index}) #{articles[index]}" }
+    (2..4).each { |index| puts "#{index + 1}) #{articles[index]}" }
     puts "\nRegular News:"
-    (3..articles.length - 1).each { |index| puts "#{index}) #{articles[index]}" }
+    (5..articles.length - 1).each { |index| puts "#{index + 1}) #{articles[index]}" }
   end
 
   # Created 6/22/21 by Samuel Gernstetter
