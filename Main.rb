@@ -33,7 +33,7 @@ loop do
     #TODO no results error message
     # search through X pages of articles for matches to keywords
     results = scraper.keyword_search view.search_prompt
-    view.article_list results
+    view.search_results results
     #search_page = scraper.page.current_page
 
     # return article list to prior position

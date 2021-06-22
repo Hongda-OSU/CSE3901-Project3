@@ -10,14 +10,22 @@ class View
   # Edited 6/19/21 by Samuel Gernstetter
   #   merge article_list and search_results
   # Edited 6/22/21 by Samuel Gernstetter
-  #   make headline listing more efficient
+  #   split output by article type
   # print a numbered list of articles on a page
-  def article_list(articles, *page_num)
-    if page_num.length > 0
-      puts "Page #{page_num[0]}"
-    else
-      puts 'Search Results:'
-    end
+  def article_list(articles, page_num)
+    puts "Page #{page_num[0]}"
+    puts "Top News:"
+    (1..2).each { |index| puts "#{index}) #{articles[index]}" }
+    puts "\nTrending News:"
+    (3..5).each { |index| puts "#{index}) #{articles[index]}" }
+    puts "\nRegular News:"
+    (3..articles.length - 1).each { |index| puts "#{index}) #{articles[index]}" }
+  end
+
+  # Created 6/22/21 by Samuel Gernstetter
+  # print a numbered list of search results on a page
+  def search_results(articles)
+    puts 'Search Results:'
     articles.each.with_index(1) { |headline, index| puts "#{index}) #{headline}" }
   end
 
