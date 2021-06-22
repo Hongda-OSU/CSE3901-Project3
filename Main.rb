@@ -11,8 +11,8 @@ loop do
   # TODO make another implementation that uses the separate view methods with corresponding altered logic (comment out old)
   page_num = scraper.page.current_page_num
   #TODO move mask/trend scrape out of loop to stop duplicate posts
-  articles = scraper.page.mask_news.keys.concat scraper.page.trend_news.keys, scraper.page.reg_news.keys
-  view.article_list articles, page_num
+  articles = scraper.page.mask_news.merge scraper.page.trend_news, scraper.page.reg_news
+  view.article_list articles.keys, page_num
   option = view.menu_prompt.downcase
   case option
   # TODO get digit input from user, verify that it is a digit and a valid article digit, handle either way
@@ -39,8 +39,19 @@ loop do
   when 'quit'
     break
   else
-    if option.to_i > 0
-      #TODO connect user to selected article
+    option = option.to_i
+    if option > 0
+      if option < articles.keys.length
+        scraper.connect_page articles.values[option - 1]
+        headline = articles.keys[option - 1]
+        date = scraper.scrape_date
+        author = scraper.scrape_author
+        # TODO get the body in a printable form to pass to view.print_article
+        body = ""
+        view.print_article headline, date, author, body
+      else
+        view.article_error_message option
+      end
     else
       view.input_error_message
     end
