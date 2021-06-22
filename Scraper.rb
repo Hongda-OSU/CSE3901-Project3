@@ -194,7 +194,6 @@ class Scraper
     @news_page.xpath('//li[@class="post-author"]/a').text
   end
 
-
   #
   # (1)there are three way user could choice, use Date: Year, Month, *Day (optional), display a list of news, ask which news they to see(integer), go page, scrape page content down, display to use
   # (2)prompt for key words, find the news title contains that keyword, and repeat
@@ -238,8 +237,7 @@ class Scraper
   #   A boolean value, true if matches to regx are found, false if not
   def search_news_text link, regx
     connect_page link
-    body = scrape_body
-    body.match? regx
+    scrape_body.match? regx
   end
 
   # Created by Drew Jackson 6/18/21
