@@ -154,13 +154,17 @@ class Scraper
   # Edited by Madison Graziani on 6/19/2021
   #   -Added the original version of code
   # Edited 6/19/21 by Samuel Gernstetter
+  # Edited 6/22/21 by Samuel Gernstetter
+  #   return as a string with line breaks
   # Scrapes the contents of the news page and returns it as text
   #
-  # @return (class Array) #TODO need to decide the return type
+  # @return
   #   current page news content
-  def scrape_content
+  def scrape_body
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    @news_page.xpath('//section/p').to_a
+    body = ""
+    @news_page.xpath('//section/p').to_a.each { |line| body.concat line, "\n" }
+    body
     #Debug print
     #contents.each { |content| puts content.text }
   end
@@ -185,6 +189,7 @@ class Scraper
   # @return (class String)
   #  current page news author
   def scrape_author
+    # TODO separate multiple authors with commas
     #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
     @news_page.xpath('//li[@class="post-author"]/a').text
   end
