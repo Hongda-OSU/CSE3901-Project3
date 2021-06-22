@@ -13,8 +13,8 @@ class View
   #   split output by article type
   # print a numbered list of articles on a page
   def article_list(articles, page_num)
-    puts "Page #{page_num[0]}"
-    puts "Top News:"
+    puts "\nPage #{page_num}"
+    puts "\nTop News:"
     (0..1).each { |index| puts "#{index + 1}) #{articles[index]}" }
     puts "\nTrending News:"
     (2..4).each { |index| puts "#{index + 1}) #{articles[index]}" }
@@ -25,7 +25,7 @@ class View
   # Created 6/22/21 by Samuel Gernstetter
   # print a numbered list of search results on a page
   def search_results(articles)
-    puts 'Search Results:'
+    puts "\nSearch Results:"
     articles.each.with_index(1) { |headline, index| puts "#{index}) #{headline}" }
   end
 
@@ -46,26 +46,26 @@ class View
   # Created 6/19/21 by Samuel Gernstetter
   # prompt the user to select a page number
   def page_prompt(last_page_num)
-    print "Enter a page number to go to that page of articles (1-#{last_page_num}): "
-    gets.chomp!
+    print "\nEnter a page number to go to that page of articles (1 - #{last_page_num}): "
+    gets.chomp!.to_i
   end
 
   # Created 6/17/21 by Samuel Gernstetter
   # alert the user that they attempted to access a nonexistent article
   def article_error_message(num)
-    puts "WARNING: Article ##{num} does not exist in current list. PLease enter a valid article number."
+    puts "\nWARNING: Article ##{num} does not exist in current list. PLease enter a valid article number.\n"
   end
 
   # Created 6/17/21 by Samuel Gernstetter
   # alert the user that they attempted to access a nonexistent page
-  def input_error_message
-    puts 'WARNING: Attempted to access nonexistent page.'
+  def page_error_message
+    puts "\nWARNING: Attempted to access nonexistent page or enter alphabetical characters as a page number. Aborting.\n"
   end
 
   # Created 6/20/21 by Samuel Gernstetter
   # alert the user that they entered an invalid input
-  def page_error_message
-    puts 'WARNING: Invalid input.'
+  def input_error_message
+    puts "\nWARNING: Invalid input.\n"
   end
 
   # Created 6/17/21 by Samuel Gernstetter
@@ -74,6 +74,7 @@ class View
     puts "#{headline}\n#{date}\n#{author}\n#{body}"
     print 'Enter any input when finished reading to return to the list.'
     gets.chomp!
+    puts
   end
 
   # Created 6/17/21 by Drew Jackson
@@ -81,7 +82,7 @@ class View
   #   change name to search_prompt
   # Prompt user for a keyword to search for
   def search_prompt
-    print "Enter search term: "
+    print "\nEnter search term: "
     gets.chomp!
   end
 end

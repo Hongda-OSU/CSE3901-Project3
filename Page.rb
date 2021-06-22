@@ -173,7 +173,7 @@ class Page
   # @return (class String)
   #   Return last page number
   def last_page_num
-    @current_page.xpath('//a[@class="page-numbers"]').to_a[-1].text
+    @current_page.xpath('//a[@class="page-numbers"]').to_a[-1].text.to_i
   end
 
   # Created (Hongda Lin, 6/17)
@@ -182,7 +182,7 @@ class Page
   # @return (class String)
   #   Return current page number
   def current_page_num
-    @current_page.xpath('//span[@class="page-numbers current"]').text
+    @current_page.xpath('//span[@class="page-numbers current"]').text.to_i
   end
 
   # Created (Hongda Lin, 6/17)

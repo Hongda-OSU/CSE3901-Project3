@@ -23,8 +23,6 @@ loop do
   when 'page'
     #TODO has_particular_page not working, what is being passed in
     page_num = view.page_prompt scraper.page.last_page_num
-    #Debug print
-    puts page_num.class
     scraper.page.has_particular_page?(page_num) ? scraper.page.goto_particular_page(page_num) : view.page_error_message
   when 'search'
     # Created by Drew Jackson 6/21/21
