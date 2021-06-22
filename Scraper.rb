@@ -194,7 +194,6 @@ class Scraper
     @news_page.xpath('//li[@class="post-author"]/a').text
   end
 
-
   #
   # (1)there are three way user could choice, use Date: Year, Month, *Day (optional), display a list of news, ask which news they to see(integer), go page, scrape page content down, display to use
   # (2)prompt for key words, find the news title contains that keyword, and repeat
