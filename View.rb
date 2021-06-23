@@ -142,7 +142,7 @@ class View
   # Created 6/22/21 by Drew Jackson
   # prompt the user with a main menu on start up
   def main_menu_invalid
-    puts "\nInvalid entry please try again."
+    puts "\nWARNING: Invalid entry. Please try again."
     #puts "\nWelcome! Please continue to be connected with news articles from The Lantern."
     #puts "Enter 'continue' to view a list of articles, enter 'page' to go to a "
     #puts "specific page, enter 'search' to search articles, or enter 'quit' to exit the "
@@ -157,7 +157,7 @@ class View
   #
   # print a message and link if the article could not be scraped
   def scrape_error_message link
-    puts "\n WARNING: Unable to scrape article. Please clink the link to view it in your browser:"
+    puts "\n WARNING: Unable to scrape article. Please click the link to view it in your browser:"
     puts link
     print "Enter any input to return to the list of articles: "
     gets
