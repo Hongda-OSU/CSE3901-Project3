@@ -18,7 +18,10 @@ Also list if people worked together (pair programmed) on a particular section.
   * WIP
             
 * Madison Graziani: 
-  * WIP
+  * wrote methods in Scraper to scrape content from specific news page
+  * wrote functionality incorporated into Page to put titles and links into hash
+  * worked on misc. methods in Page and Scraper including connect_page and get_link
+  * wrote rspec for Scraper
                    
 * Samuel Gernstetter: 
   * wrote majority of View class, wrote main loop with Drew, assisted here and there with Page and Scraper
