@@ -12,7 +12,7 @@ Please list who did what for each part of the project.
 Also list if people worked together (pair programmed) on a particular section.
 
 * Hongda Lin: 
-  * WIP
+  * wrote the Page class, assisted with Scraper class, wrote rspec for Page class methods
           
 * Drew Jackson: 
   * WIP
@@ -21,7 +21,7 @@ Also list if people worked together (pair programmed) on a particular section.
   * WIP
                    
 * Samuel Gernstetter: 
-  * WIP
+  * wrote majority of View class, wrote main loop with Drew, assisted here and there with Page and Scraper
 
 ### Running the Web Scraper
   * To run the program, you can run Main.rb using an IDE such as RubyMine or run the command: ruby Main.rb.
@@ -47,3 +47,7 @@ Also list if people worked together (pair programmed) on a particular section.
   * Page Choice - can go to a specific page of the Lantern to see all the articles of that page
   * Next/Previous - can navigate the pages of articles without choosing a specific page
   * Displaying Articles - can display an article's author(s), publication date, and contents
+
+### Runing rspec files
+  * Go to the folder spec using terminal
+  * Run command ruby Page_spec.rb for testing Page class methods
