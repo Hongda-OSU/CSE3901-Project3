@@ -12,7 +12,9 @@ Please list who did what for each part of the project.
 Also list if people worked together (pair programmed) on a particular section.
 
 * Hongda Lin: 
-  * wrote the Page class, assisted with Scraper class, wrote rspec for Page class methods
+  * wrote the Page class
+  * assisted with Scraper class
+  * wrote rspec for Page class methods
           
 * Drew Jackson: 
   * WIP
@@ -24,7 +26,9 @@ Also list if people worked together (pair programmed) on a particular section.
   * wrote rspec for Scraper
                    
 * Samuel Gernstetter: 
-  * wrote majority of View class, wrote main loop with Drew, assisted here and there with Page and Scraper
+  * wrote majority of View class
+  * wrote main loop with Drew
+  * assisted here and there with Page and Scraper
 
 ### Running the Web Scraper
   * To run the program, you can run Main.rb using an IDE such as RubyMine or run the command: ruby Main.rb.
