@@ -54,11 +54,9 @@ loop do
     until option == 'exit'
      if results.length > 0
        view.search_results results
-       view.search_result_menu
-       option = gets.chomp!
-      else
-        view.no_search_results
-        option = gets.chomp!
+       option = view.search_result_menu
+     else
+       option = view.no_search_results
      end
      if option.to_i > 0 && option.to_i <= results.length
        print_num_article scraper, results, option, view

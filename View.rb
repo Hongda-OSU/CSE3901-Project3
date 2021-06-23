@@ -90,7 +90,8 @@ class View
   def search_result_menu
     puts "\nEnter article number to print article text or click on link to go to that page,"
     puts "enter 'next' to search for more results, enter 'search' to perform a new search,"
-    puts "or enter 'exit' to return to article menu: "
+    print "or enter 'exit' to return to article menu: "
+    gets.chomp!
   end
 
   #Created by Drew Jackson on 6/22/2021
@@ -98,16 +99,26 @@ class View
   def no_search_results
     puts "\nNo results found in this search. If you would like to search further back through"
     print "articles enter 'continue', or enter 'exit' to return to article menu: "
+    gets.chomp!
   end
 
 
   # Created 6/22/21 by Drew Jackson
   # prompt the user with a main menu on start up
   def main_menu_prompt
-    puts "\nWelcome! Please continue to be connected with news articles from The Lantern"
-    puts "Enter 'continue' to view a list of articles, enter 'page' to go to a"
-    puts "specific page, enter 'search' to search articles, or enter 'quit' to exit the"
+    puts "\nWelcome! Please continue to be connected with news articles from The Lantern."
+    puts "Enter 'continue' to view a list of articles, enter 'page' to go to a "
+    puts "specific page, enter 'search' to search articles, or enter 'quit' to exit the "
     print "program: "
     gets.chomp!
+  end
+
+  # Created 6/22/21 by Samuel Gernstetter
+  # print a message and link if the article could not be scraped
+  def scrape_error_message link
+    puts "\n WARNING: Unable to scrape article. Please clink the link to view it in your browser:"
+    puts link
+    print "Enter any input to return to the list of articles: "
+    gets
   end
 end
