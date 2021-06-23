@@ -106,9 +106,14 @@ class View
   # prompt the user with a main menu on start up
   def main_menu_prompt
     puts "\nWelcome! Please continue to be connected with news articles from The Lantern"
-    puts "Enter 'continue' to view a list of articles, enter 'page' to go to a"
-    puts "specific page, enter 'search' to search articles, or enter 'quit' to exit the"
-    print "program: "
+    puts "Enter 'continue' to view a list of articles, enter 'search' to search articles,"
+    print "or enter 'quit' to exit the program: "
     gets.chomp!
+  end
+
+  # Created 6/22/21 by Drew Jackson
+  # prompt the user with a main menu on start up
+  def main_menu_invalid
+    puts "\nInvalid entry please try again."
   end
 end

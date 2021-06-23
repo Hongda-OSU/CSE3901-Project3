@@ -194,9 +194,6 @@ class Scraper
     @news_page.xpath('//li[@class="post-author"]/a').text
   end
 
-  #
-  # (1)there are three way user could choice, use Date: Year, Month, *Day (optional), display a list of news, ask which news they to see(integer), go page, scrape page content down, display to use
-  # (2)prompt for key words, find the news title contains that keyword, and repeat
   # Created by Drew Jackson 6/17/21
   # @param terms
   #   an array of search terms entered by the user
@@ -213,14 +210,14 @@ class Scraper
     until matches.length == 10 || pages == 5 || !page.has_next_page?
       pages += 1
       page.goto_page("Next »")
-      information.merge page.reg_news
+      information.merge! page.reg_news
 
       # Search titles for key words
-      information.each_key{|title| matches.push(title.to_s) if regx.match(title.to_s)}
+      information.each_key{|title| matches << title.to_s if regx.match title.to_s}
 
       #search unmatched articles text for key words
       remaining = information.reject{|key| matches.include?(key.to_s)}
-      remaining.each_value{|link| matches.push(remaining.key(link)) if search_news_text(link, regx)}
+      remaining.each_value{|link| matches << remaining.key(link) if search_news_text link, regx}
     end
 
     #return hash of matched articles
@@ -243,14 +240,10 @@ class Scraper
     connect_page link
     #content = scrape_body
     # RegExp to search content for keywords
-    # TODO match to format of content_scrape return
     # Edit changed each to any?, short circuits search
     # Edit content changed to string, cannot use any?
-    #content.any?{|text| regx.match?(text)}
-    #regx.match? content
-    #body = scrape_body
-    #body.match? regxb
     scrape_body.match? regx
+    #regx.match? scrape_body
   end
 
   # Created by Drew Jackson 6/18/21
