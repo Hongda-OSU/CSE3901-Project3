@@ -21,7 +21,7 @@ Also list if people worked together (pair programmed) on a particular section.
   * WIP
                    
 * Samuel Gernstetter: 
-  * WIP
+  * wrote majority of View class, wrote main loop with Drew, assisted here and there with Page and Scraper
 
 ### Running the Web Scraper
   * To run the program, you can run Main.rb using an IDE such as RubyMine or run the command: ruby Main.rb.
