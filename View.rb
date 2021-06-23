@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO add variable definitions
 # Created 6/17/21 by Samuel Gernstetter
 # Methods to input and output data
 class View
@@ -9,6 +8,12 @@ class View
   #   merge article_list and search_results
   # Edited 6/22/21 by Samuel Gernstetter
   #   split output by article type
+  #
+  # @param articles
+  #   an array of article headlines
+  # @param page_num
+  #   the page number currently being viewed
+  #
   # print a numbered list of articles on a page
   def article_list(articles, page_num)
     puts "\nPage #{page_num}"
@@ -21,6 +26,10 @@ class View
   end
 
   # Created 6/22/21 by Samuel Gernstetter
+  #
+  # @param articles
+  #   an array of article headlines
+  #
   # print a numbered list of search results on a page
   def search_results(articles)
     puts "\nSearch Results:"
@@ -42,6 +51,10 @@ class View
   end
 
   # Created 6/19/21 by Samuel Gernstetter
+  #
+  # @param last_page_num
+  #   the number of the last page on the site
+  #
   # prompt the user to select a page number
   def page_prompt(last_page_num)
     print "\nEnter a page number to go to that page of articles (1 - #{last_page_num}): "
@@ -49,6 +62,10 @@ class View
   end
 
   # Created 6/17/21 by Samuel Gernstetter
+  #
+  # @param num
+  #   the invalid number the user attempted to input
+  #
   # alert the user that they attempted to access a nonexistent article
   def article_error_message(num)
     puts "\nWARNING: Article ##{num} does not exist in current list. PLease enter a valid article number.\n"
@@ -69,6 +86,16 @@ class View
   # Created 6/17/21 by Samuel Gernstetter
   # Edited 6/22/21 by Samuel Gernstetter
   #   formatting and finishing fixes
+  #
+  # @param headline
+  #   the headline of the article
+  # @param date
+  #   the publication date of the article
+  # @param author
+  #   the author(s) of the article
+  # @param body
+  #   the body text of the article
+  #
   # print an article and prompt the user to exit
   def print_article(headline, date, author, body)
     puts "\n#{headline}\n#{date}\n#{author}\n\n#{body}"
@@ -114,6 +141,10 @@ class View
   end
 
   # Created 6/22/21 by Samuel Gernstetter
+  #
+  # @param link
+  #   the link to the article whose text could not be scraped
+  #
   # print a message and link if the article could not be scraped
   def scrape_error_message link
     puts "\n WARNING: Unable to scrape article. Please clink the link to view it in your browser:"

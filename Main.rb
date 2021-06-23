@@ -3,18 +3,22 @@
 require_relative 'Scraper'
 require_relative 'View'
 
-#TODO comments and remove view arg after class removed
+#TODO comments
 def print_num_article scraper, articles, option, view
   option = option.to_i
   if option > 0
     if option <= articles.keys.length
-      scraper.connect_page articles.values[option - 1]
+      link = articles.values[option - 1]
+      scraper.connect_page link
       headline = articles.keys[option - 1]
       date = scraper.scrape_date
       author = scraper.scrape_author
       body = scraper.scrape_body
-      view.print_article headline, date, author, body
-      option = 'continue'
+      if body != ""
+        view.print_article headline, date, author, body
+      else
+        view.scrape_error_message link
+      end
     else
       view.article_error_message option
     end
@@ -63,11 +67,8 @@ loop do
        #TODO what returned and processed by loop
      end
     end
-    #search_page = scraper.page.current_page
-
     # return article list to prior position
     scraper.page.goto_particular_page page_num
-    #option = 'continue'
   when 'quit'
     break
   else
@@ -92,6 +93,5 @@ loop do
     end
 =end
   end
-  #option = view.menu_prompt.downcase
 end
 
