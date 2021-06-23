@@ -17,7 +17,10 @@ Also list if people worked together (pair programmed) on a particular section.
   * wrote rspec for Page class methods
           
 * Drew Jackson: 
-  * WIP
+  * Wrote all of search module
+  * Wrote large amount of main, edited logic and changed execution order
+  * wrote several view methods
+  * assisted in Scraper
             
 * Madison Graziani: 
   * wrote methods in Scraper to scrape content from specific news page
@@ -48,6 +51,8 @@ Also list if people worked together (pair programmed) on a particular section.
   * After entering 'search':
     * You will be prompted to enter a term/keyword to search for among the articles.
     * The discovered articles, if there are any, will then be displayed. You can choose to view the contents of these articles just as before.
+    * Search scans several pages of articles and returns resuls, enter 'next' for search to scan the next several pages and add to results list
+    * each search for a new term resets results list
 
 ### Functionality
   * Search - can search the articles by keywords/terms
