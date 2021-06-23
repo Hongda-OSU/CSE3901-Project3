@@ -58,3 +58,4 @@ Also list if people worked together (pair programmed) on a particular section.
 ### Runing rspec files
   * Go to the folder spec using terminal
   * Run command ruby Page_spec.rb for testing Page class methods
+  * Run command ruby Scraper_spec.rb for testing Scraper class methods
