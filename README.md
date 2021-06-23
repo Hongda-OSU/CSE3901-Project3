@@ -12,7 +12,7 @@ Please list who did what for each part of the project.
 Also list if people worked together (pair programmed) on a particular section.
 
 * Hongda Lin: 
-  * WIP
+  * wrote the Page class, assisted with Scraper class, wrote rspec for Page class methods
           
 * Drew Jackson: 
   * WIP
@@ -47,3 +47,7 @@ Also list if people worked together (pair programmed) on a particular section.
   * Page Choice - can go to a specific page of the Lantern to see all the articles of that page
   * Next/Previous - can navigate the pages of articles without choosing a specific page
   * Displaying Articles - can display an article's author(s), publication date, and contents
+
+### Runing rspec files
+  * Go to the folder spec using terminal
+  * Run command ruby Page_spec.rb for testing Page class methods
