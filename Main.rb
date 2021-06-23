@@ -26,7 +26,6 @@ end
 
 scraper = Scraper.new
 view = View.new
-
 # greet user and prompt for action
 option = nil
 until option == 'search' || option == 'continue' || option == 'quit'
@@ -72,12 +71,10 @@ loop do
       # if matches found present list
       if results.length > 0
         view.search_results results
-        view.search_result_menu
-        option = gets.chomp!
+        option = view.search_result_menu
       # else inform user of no matches and prompt for action
       else
-        view.no_search_results
-        option = gets.chomp!
+        option = view.no_search_results
       end
 
       # if user enters article number print article text
@@ -92,6 +89,17 @@ loop do
         #clear results from previous searches
         results = {}
       end
+
+     # present results to user
+     if results.length > 0
+       view.search_results results
+       option = view.search_result_menu
+     else
+       option = view.no_search_results
+     end
+     if option.to_i > 0 && option.to_i <= results.length
+       print_num_article scraper, results, option, view
+     end
     end
 
     # return article list to prior position for smooth return

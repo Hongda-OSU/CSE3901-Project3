@@ -184,14 +184,17 @@ class Scraper
   # Edited by Madison Graziani on 6/18/2021
   #   -Added the original version of code
   # Edited 6/19/21 by Samuel Gernstetter
+  # Edited 6/22/21 by Samuel Gernstetter
+  #   handle multiple authors
   # Scrapes the name of the article's author and returns it as text
   #
-  # @return (class String)
+  # @return
   #  current page news author
   def scrape_author
-    # TODO separate multiple authors with commas
-    #connect_page(@information[:"Ohio Union now accepting space requests for fall semester"])
-    @news_page.xpath('//li[@class="post-author"]/a').text
+    authors_array = @news_page.xpath('//li[@class="post-author"]/a')
+    authors = ""
+    authors_array.each { |author| authors.concat author, ", " }
+    authors.chomp! ", "
   end
 
   # Created by Drew Jackson 6/17/21
@@ -238,7 +241,6 @@ class Scraper
   #   A boolean value, true if matches to regx are found, false if not
   def search_news_text link, regx
     connect_page link
-    #content = scrape_body
     # RegExp to search content for keywords
     # Edit changed each to any?, short circuits search
     # Edit content changed to string, cannot use any?
