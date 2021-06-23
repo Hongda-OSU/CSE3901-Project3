@@ -39,9 +39,8 @@ class Scraper
   #Set:
   #   @mask_news to the current page mask news hash, @mask_news.length == 2
   def scrape_mask_news
-    # Resets hash to take info from new page
     @mask_news = @page.mask_news
-    #@mask_news = Hash.new
+    #Moved to Page.rb
     #@page.mask_news.keys.length.times {|index| @mask_news[@page.mask_news.keys[index].to_sym] = @page.mask_news.values[index]}
   end
 
@@ -57,9 +56,8 @@ class Scraper
   #Set:
   #   @trend_news to the current page trend news hash, @trend_news.length == 3
   def scrape_trend_news
-    # Resets hash to take info from new page
     @trend_news = @page.trend_news
-    #@trend_news = Hash.new
+    #Moved to Page.rb
     #@page.trend_news.keys.length.times {|index| @trend_news[@page.trend_news.keys[index].to_sym] = @page.trend_news.values[index]}
   end
 
@@ -75,9 +73,8 @@ class Scraper
   #Set:
   #   @reg_news to the current page reg news hash , @reg_news.length == 12 except the last page
   def scrape_reg_news
-    # Resets hash to take info from new page
     @reg_news = @page.reg_news
-    #@reg_news = Hash.new
+    #Moved to Page.rb
     #@reg.reg_news.keys.length.times {|index| @reg_news[@page.reg_news.keys[index].to_sym] = @page.reg_news.values[index]}
   end
 
