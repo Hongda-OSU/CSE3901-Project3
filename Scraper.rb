@@ -216,7 +216,7 @@ class Scraper
       information.merge! page.reg_news
 
       # Search titles for key words
-      information.each_key{|title| matches << title.to_s if regx.match title.to_s}
+      information.each_key{|title| matches << title.to_s if regx.match title.to_s.downcase}
 
       #search unmatched articles text for key words
       remaining = information.reject{|key| matches.include?(key.to_s)}
