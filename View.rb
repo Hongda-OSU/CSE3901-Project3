@@ -82,7 +82,7 @@ class View
   # Prompt user for a keyword to search for
   def search_prompt
     print "\nEnter search term: "
-    gets.chomp!
+    gets.chomp!.downcase
   end
 
   #Created by Drew Jackson on 6/22/2021

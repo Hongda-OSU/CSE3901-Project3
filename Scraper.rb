@@ -202,7 +202,7 @@ class Scraper
   #   an array of search terms entered by the user
   # @return
   #   a hash of title/link key/value pairs of articles containing search terms
-  # TODO use RegExp to be case insensitive
+  # case insensitive using text downcase
   def keyword_search *terms
     matches = Array.new
     regx = create_regexp terms

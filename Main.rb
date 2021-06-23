@@ -1,9 +1,12 @@
 # Created 6/20/21 by Samuel Gernstetter
 # Edited 6/20/21 by Samuel Gernstetter
+# Edited 6/20-22 by Drew Jackson
 require_relative 'Scraper'
 require_relative 'View'
 
-# Created by Drew Jackson 6/22/2021
+# Created by Sam Gernstetter 6/20/2021
+# Edited by Drew Jackson 6/22/2021
+#   edit: moved block of code out of main into method for multiple calls
 # prints the selected article for the user
 def print_num_article scraper, articles, option, view
   option = option.to_i
@@ -78,9 +81,8 @@ loop do
       end
 
       # if user enters article number print article text
-      if option.to_i > 0 && option.to_i <= results.length
+      if option.to_i > 0 && option.to_i < results.length
         print_num_article scraper, results, option, view
-        #TODO what returned and processed by loop
       end
 
       # collect new search term if user wants to perform new search
@@ -97,7 +99,7 @@ loop do
      else
        option = view.no_search_results
      end
-     if option.to_i > 0 && option.to_i <= results.length
+     if option.to_i > 0 && option.to_i < results.length
        print_num_article scraper, results, option, view
      end
     end
