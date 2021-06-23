@@ -255,22 +255,8 @@ class Scraper
   # @return
   #   a single regular expression to cover all search terms
   def create_regexp term
-    #TODO update to case insensitive
     Regexp.union(term)
   end
 
-  # (3)Randomly generate a list of titles, and repeat
-  # A view to make a interaction between user and Scraper
-  # Possibly: GUI
-
 end
-
-=begin
-scraper = Scraper.new
-scraper.scrape_reg_news
-title =  scraper.get_title 3, 1 #3 means reg_news. 1-1 means first article because of hash
-link = scraper.get_link 3, title
-scraper.connect_page link
-scraper.scrape_content
-=end
 
