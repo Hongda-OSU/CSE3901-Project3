@@ -28,7 +28,7 @@ Also list if people worked together (pair programmed) on a particular section.
   * For optimal reading, enable word wrap or an equivalent feature in whatever you're using to run this.
   * There are four options to choose from immediately after running the web scraper:
     * Entering 'continue' will print a list of article titles from the OSU's Lantern newspaper
-    * Entering 'search' will allow you to search for articles by a specific keyword
+    * Entering 'search' will allow you to search for articles by a specific keyword (may take a little while)
     * Entering 'quit' will cause the program to exit
   * After entering 'continue':
     * A numbered list of articles will be printed, including top news, trending news, and regular news.
