@@ -122,4 +122,3 @@ loop do
     option = 'continue'
   end
 end
-

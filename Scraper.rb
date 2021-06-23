@@ -231,7 +231,7 @@ class Scraper
   # Edit by Drew Jackson 6/22/2021
   #   Change from scrape_content to scrape_body
   # Edited 6/22/21 by Samuel Gernstetter
-  #   adjust to work with scrape_body
+  #   adjust to work with scrape_body, make the article all lowercase
   # Scans an article for keywords, returns true if matched
   # @param link
   #   The link to the article to be scanned
@@ -244,7 +244,7 @@ class Scraper
     # RegExp to search content for keywords
     # Edit changed each to any?, short circuits search
     # Edit content changed to string, cannot use any?
-    scrape_body.match? regx
+    scrape_body.downcase.match? regx
     #regx.match? scrape_body
   end
 
