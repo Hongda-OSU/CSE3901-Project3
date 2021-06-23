@@ -244,15 +244,10 @@ class Scraper
   #   A boolean value, true if matches to regx are found, false if not
   def search_news_text link, regx
     connect_page link
-    #content = scrape_body
     # RegExp to search content for keywords
     # TODO match to format of content_scrape return
     # Edit changed each to any?, short circuits search
     # Edit content changed to string, cannot use any?
-    #content.any?{|text| regx.match?(text)}
-    #regx.match? content
-    #body = scrape_body
-    #body.match? regxb
     scrape_body.match? regx
   end
 

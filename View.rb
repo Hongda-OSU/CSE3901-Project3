@@ -4,7 +4,6 @@
 # Created 6/17/21 by Samuel Gernstetter
 # Methods to input and output data
 class View
-  # TODO make split up versions of article_list for the three news types
   # Created 6/17/21 by Samuel Gernstetter
   # Edited 6/19/21 by Samuel Gernstetter
   #   merge article_list and search_results
@@ -73,7 +72,7 @@ class View
   # print an article and prompt the user to exit
   def print_article(headline, date, author, body)
     puts "\n#{headline}\n#{date}\n#{author}\n\n#{body}"
-    print "\nEnter any input when finished reading to return to the list. "
+    print "Enter any input when finished reading to return to the list. "
     gets
   end
 
@@ -98,7 +97,7 @@ class View
   # Prints menu if no search results found.
   def no_search_results
     puts "\nNo results found in this search. If you would like to search further back through"
-    puts "articles enter 'continue', or enter 'exit' to return to article menu: "
+    print "articles enter 'continue', or enter 'exit' to return to article menu: "
   end
 
 
