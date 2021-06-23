@@ -184,13 +184,17 @@ class Scraper
   # Edited by Madison Graziani on 6/18/2021
   #   -Added the original version of code
   # Edited 6/19/21 by Samuel Gernstetter
+  # Edited 6/22/21 by Samuel Gernstetter
+  #   handle multiple authors
   # Scrapes the name of the article's author and returns it as text
   #
-  # @return (class String)
+  # @return
   #  current page news author
   def scrape_author
-    # TODO separate multiple authors with commas
-    @news_page.xpath('//li[@class="post-author"]/a').text
+    authors_array = @news_page.xpath('//li[@class="post-author"]/a')
+    authors = ""
+    authors_array.each { |author| authors.concat author, ", " }
+    authors.chomp! ", "
   end
 
   #
