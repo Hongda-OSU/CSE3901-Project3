@@ -12,16 +12,16 @@ Please list who did what for each part of the project.
 Also list if people worked together (pair programmed) on a particular section.
 
 * Hongda Lin: 
-  * 
+  * WIP
           
 * Drew Jackson: 
-  * 
+  * WIP
             
 * Madison Graziani: 
-  * 
+  * WIP
                    
 * Samuel Gernstetter: 
-  * 
+  * WIP
 
 ### Running the Web Scraper
   * To run the program, you can run Main.rb using an IDE such as RubyMine or run the command: ruby Main.rb.
@@ -42,4 +42,7 @@ Also list if people worked together (pair programmed) on a particular section.
     * The discovered articles, if there are any, will then be displayed. You can choose to view the contents of these articles just as before.
 
 ### Functionality
-  * 
+  * Search - can search the articles by keywords/terms
+  * Page Choice - can go to a specific page of the Lantern to see all the articles of that page
+  * Next/Previous - can navigate the pages of articles without choosing a specific page
+  * Displaying Articles - can display an article's author(s), publication date, and contents
