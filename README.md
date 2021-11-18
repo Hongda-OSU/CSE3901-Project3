@@ -13,11 +13,11 @@ Also list if people worked together (pair programmed) on a particular section.
 
 * Hongda Lin: 
   * wrote the Page class
-  * assisted with Scraper class
+  * wrote Scraper class
   * wrote rspec for Page class methods
           
 * Drew Jackson: 
-  * Wrote all of search module
+  * Wrote search module
   * Wrote large amount of main, edited logic and changed execution order
   * wrote several view methods
   * assisted in Scraper
